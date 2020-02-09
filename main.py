@@ -49,6 +49,7 @@ def start():
     return start_response(color)
 
 def get_current_options(data):
+    options = ['up', 'down', 'left', 'right']
     height = data['board']['height']
     width = data['board']['width']
     selfPieces = []
@@ -60,7 +61,9 @@ def get_current_options(data):
         for piece in snake['body']:
             snakeBody.append(piece)
         otherSnakes.append(snakeBody)
-    return ['up', 'down', 'left', 'right']
+    option_dimensions = {'up':[selfPieces[0]['x'],selfPieces[0]['y']]}
+    print(option_dimensions)
+    return options
 
 
 @bottle.post('/move')

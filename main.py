@@ -35,6 +35,7 @@ def ping():
 
 @bottle.post('/start')
 def start():
+    print('start')
     data = bottle.request.json
 
     """
@@ -51,6 +52,7 @@ def start():
 
 @bottle.post('/move')
 def move():
+    print('move')
     data = bottle.request.json
 
     """

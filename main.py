@@ -111,7 +111,7 @@ def get_current_options(data):
             index = index + 1
             if index == snake_sizes[snake['name']]:
                 break
-        otherSnakes[snake['name']] = snakeBody
+        otherSnakes.append(snakeBody)
     option_dimensions = get_option_dimensions(selfPieces[0])
     for direction in option_dimensions:
         if len(options) == 1:

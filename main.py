@@ -132,12 +132,27 @@ def remove_directions_close_to_big_snakes(options, option_dimensions, otherSnake
             options.remove(direction)
     return options
 
-def choose_best_option(current_options, option_dimensions, otherSnakes, size):
+def get_food_data(data):
+    return data['board']['food']
+
+def move_to_health(options, option_dimensions, food):
+    for direction in options:
+        if len(options) == 1:
+            return [options[0]]
+        dimensions = option_dimensions[direction]
+        for item in food:
+            if food['x'] == dimensions[0] and food['y'] == dimensions[1]:
+                return [direction]
+    return options
+
+def choose_best_option(current_options, option_dimensions, otherSnakes, size, health, food):
     if len(current_options) == 1:
         return current_options[0]
     current_options = remove_dead_paths(current_options, option_dimensions, otherSnakes)
-    #if food low move towards food
     current_options = remove_directions_close_to_big_snakes(current_options, option_dimensions, otherSnakes, size)#remove paths that are 1 away from a bigger snakes
+    print('HEALTH: '+str(health))
+    if health < 50:
+        current_options = move_to_health(current_options, option_dimensions, food)
     #tend to food if close by and not near other otherSnakes
     #else maybe chase tail
     #or choose the most open direction
@@ -151,8 +166,9 @@ def move():
     food = data['board']['food']
     health = data['you']['health']
     size = len(data['you']['body'])
+    food = get_food_data(data)
     current_options, option_dimensions, otherSnakes = get_current_options(data, size)
-    direction = choose_best_option(current_options, option_dimensions, otherSnakes, size)
+    direction = choose_best_option(current_options, option_dimensions, otherSnakes, size, health, food)
     return move_response(direction)
 
 

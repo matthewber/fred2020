@@ -78,8 +78,12 @@ def update_snake_lengths(data):
     global last_turn_food_locations
     global snake_sizes
     for snake in data['board']['snakes']:
-        if snake not in snake_sizes:
-            snake_sizes[snake] = 3
+        snake_exists = False
+        for key in snake_sizes:
+            if key == snake['name']:
+                snake_exists = True
+        if not snake_exists:
+            snake_sizes[snake['name']] = 3
         else:
             snakeHead = snake['body'][0]
             for food in last_turn_food_locations:

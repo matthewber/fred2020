@@ -55,7 +55,11 @@ def start():
 def move():
     print('move')
     data = bottle.request.json
-
+    health = data['you']['health']
+    headx = data['you']['body']['data'][0]['x']
+    heady = data['you']['body']['data'][0]['y']
+    body1x = data['you']['body']['data'][1]['x']
+    body1y = data['you']['body']['data'][1]['y']
     """
     TODO: Using the data from the endpoint request object, your
             snake AI must choose a direction to move in.

@@ -68,6 +68,9 @@ def on_another_snake(dimensions, otherSnakes):
             return True
     return False
 
+def remove_directions_close_to_big_snakes(directions):
+    return directions
+
 def get_current_options(data):
     options = ['up', 'down', 'left', 'right']
     selfPieces = []
@@ -82,14 +85,34 @@ def get_current_options(data):
     option_dimensions = {'up':[selfPieces[0]['x'],selfPieces[0]['y']-1],'down':[selfPieces[0]['x'],selfPieces[0]['y']+1],'left':[selfPieces[0]['x']-1,selfPieces[0]['y']],'right':[selfPieces[0]['x']+1,selfPieces[0]['y']]}
     for direction in option_dimensions:
         if len(options) == 1:
-            return options[0]
+            return options[0], option_dimensions, otherSnakes
         dimensions = option_dimensions[direction]
         if out_of_bounds(dimensions, data) or on_another_snake(dimensions, otherSnakes):
+            #dont remove direction if its a tail and the head isn't one away from a food
+            #dont remove direction if its a competing head and you're bigger
             options.remove(direction)
-    print(option_dimensions)
-    return options
+    return options, option_dimensions, otherSnakes
 
-def choose_best_option(current_options):
+def dead_path(dimensions, otherSnakes):
+    #check to see if the path is a dead endpoint
+    return False
+
+def remove_dead_paths(current_options, option_dimensions, otherSnakes):
+    for direction in current_options:
+        if len(current_options) == 1:
+            return current_options[0]
+        dimensions = option_dimensions[direction]
+        if dead_path(dimensions, otherSnakes):
+            current_options.remove(direction)
+    return current_options
+
+def choose_best_option(current_options, option_dimensions, otherSnakes):
+    if len(current_options) == 1:
+        return current_options[0]
+    current_options = remove_dead_paths(current_options, option_dimensions, otherSnakes)
+    #tend to food if close by and not near other otherSnakes
+    #else maybe chase tail
+    #or choose the most open direction
     choice = random.choice(current_options)
     return choice
 
@@ -98,9 +121,10 @@ def move():
     data = bottle.request.json
     food = data['board']['food']
     health = data['you']['health']
-    current_options = get_current_options(data)
-    direction = choose_best_option(current_options)
+    current_options, option_dimensions, otherSnakes = get_current_options(data)
+    direction = choose_best_option(current_options, option_dimensions, otherSnakes)
     return move_response(direction)
+
 
 
 @bottle.post('/end')

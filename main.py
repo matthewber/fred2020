@@ -6,6 +6,8 @@ import waitress
 
 from api import ping_response, start_response, move_response, end_response
 
+snake_sizes = {}
+last_turn_food_locations = {}
 
 @bottle.route('/')
 def index():
@@ -72,6 +74,22 @@ def on_another_snake(dimensions, otherSnakes):
 def get_option_dimensions(piece):
     return {'up':[piece['x'],piece['y']-1],'down':[piece['x'],piece['y']+1],'left':[piece['x']-1,piece['y']],'right':[piece['x']+1,piece['y']]}
 
+def update_snake_lengths():
+    global last_turn_food_locations
+    global snake_sizes
+    for snake in data['board']['snakes']:
+        if snake not in snake_sizes:
+            snake_sizes[snake] = 3
+        else:
+            snakeHead = snake['body'][0]
+            for food in last_turn_food_locations:
+                if food['x'] == snakeHead['x'] and food['y'] == snakeHead['y']:
+                    snake_sizes[snake['name']] = snake_sizes[snake['name']] + 1
+    #update last food locations
+    last_turn_food_locations = []
+    for food in data['board']['food']:
+        last_turn_food_locations.append(food)
+
 
 
 def get_current_options(data, size):
@@ -80,11 +98,16 @@ def get_current_options(data, size):
     for bodyPiece in data['you']['body']:
         selfPieces.append(bodyPiece)
     otherSnakes = []
+    update_snake_lengths(data)
     for snake in data['board']['snakes']:
         snakeBody = []
+        index = 0
         for piece in snake['body']:
             snakeBody.append(piece)
-        otherSnakes.append(snakeBody)
+            index = index + 1
+            if index == snake_sizes[snake['name']]:
+                break
+        otherSnakes[snake['name']] = snakeBody
     option_dimensions = get_option_dimensions(selfPieces[0])
     for direction in option_dimensions:
         if len(options) == 1:
@@ -177,13 +200,12 @@ def move_to_health(options, option_dimensions, food):
 def remove_poor_paths(options, option_dimensions, otherSnakes):
     return options
 
-def choose_best_option(current_options, option_dimensions, otherSnakes, size, health, food, data):
+def choose_best_option(current_options, option_dimensions, otherSnakes, health, food, data):
     if len(current_options) == 1:
         return current_options[0]
     current_options = remove_dead_paths(current_options, option_dimensions, otherSnakes, data)
     print('removing big snake directs')
-    print('size is'+str(size))
-    current_options = remove_directions_close_to_big_snakes(current_options, option_dimensions, otherSnakes, size)#remove paths that are 1 away from a bigger snakes
+    current_options = remove_directions_close_to_big_snakes(current_options, option_dimensions, otherSnakes, snake_sizes['matthewber / fred2020'])#remove paths that are 1 away from a bigger snakes
     print('HEALTH: '+str(health))
     #if health < 50:
     current_options = move_to_health(current_options, option_dimensions, food)#moves to health piece if one away
@@ -200,10 +222,9 @@ def move():
     data = bottle.request.json
     food = data['board']['food']
     health = data['you']['health']
-    size = len(data['you']['body'])
     food = get_food_data(data)
-    current_options, option_dimensions, otherSnakes = get_current_options(data, size)
-    direction = choose_best_option(current_options, option_dimensions, otherSnakes, size, health, food, data)
+    current_options, option_dimensions, otherSnakes, size = get_current_options(data)
+    direction = choose_best_option(current_options, option_dimensions, otherSnakes, health, food, data)
     return move_response(direction)
 
 

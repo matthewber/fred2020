@@ -145,6 +145,7 @@ def move_to_health(options, option_dimensions, food):
                 return [direction]
     return options
 
+
 def choose_best_option(current_options, option_dimensions, otherSnakes, size, health, food):
     if len(current_options) == 1:
         return current_options[0]

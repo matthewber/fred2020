@@ -159,8 +159,8 @@ def choose_best_option(current_options, option_dimensions, otherSnakes, size, he
     print(size)
     current_options = remove_directions_close_to_big_snakes(current_options, option_dimensions, otherSnakes, size)#remove paths that are 1 away from a bigger snakes
     print('HEALTH: '+str(health))
-    if health < 50:
-        current_options = move_to_health(current_options, option_dimensions, food)#moves to health piece if one away
+    #if health < 50:
+    current_options = move_to_health(current_options, option_dimensions, food)#moves to health piece if one away
     current_options = remove_poor_paths(current_options, option_dimensions, otherSnakes)
     #tend to food if close by and not near other otherSnakes
     #else maybe chase tail

@@ -229,7 +229,7 @@ def move():
     food = get_food_data(data)
     current_options, option_dimensions, otherSnakes = get_current_options(data)
     direction = choose_best_option(current_options, option_dimensions, otherSnakes, health, food, data)
-    print('my current size = '+snake_sizes['matthewber / fred2020'])
+    print('my current size = '+str(snake_sizes['matthewber / fred2020']))
     return move_response(direction)
 
 

@@ -54,6 +54,7 @@ def out_of_bounds(dimensions, data):
         return True
     if dimensions[1] < 0 or dimensions[1] >= height:
         return True
+    print('dimensions not out of bounds: ', str(dimensions[0]), str(dimensions[1]))
     return False
 
 def snake_in_dimensions(dimensions , snake):
@@ -96,16 +97,18 @@ def get_current_options(data, size):
     return options, option_dimensions, otherSnakes
 
 def dead_path(point, otherSnakes, data):
-    possible_dimensions = ['up', 'down', 'left', 'right']
+    possible_directions = ['up', 'down', 'left', 'right']
     #return true if 4 directions blocked in new direction
-    for direction in possible_dimensions:
+    direction_blocked = {'up':False, 'down':False, 'left':False, 'right':False }
+    for direction in possible_directions:
         if out_of_bounds(point, data):
             print('OUT of bounds'+direction)
-            possible_dimensions = possible_dimensions.remove(direction)
+            direction_blocked[direction] = True
         if on_another_snake(point, otherSnakes):
             print('On another snake'+direction)
-            possible_dimensions = possible_dimensions.remove(direction)
-    if len(possible_dimensions) == 0:
+            direction_blocked[direction] = True
+    if direction_blocked['up'] and direction_blocked['down'] and direction_blocked['left'] and direction_blocked['right']:
+        print('Dead path')
         return True
     print('Not a dead path')
     print('possible dimensions = ')
@@ -113,13 +116,17 @@ def dead_path(point, otherSnakes, data):
     return False
 
 def remove_dead_paths(current_options, option_dimensions, otherSnakes, data):
+    new_options = []
     for direction in current_options:
         if len(current_options) == 1:
             return [current_options[0]]
         dimensions = option_dimensions[direction]
-        if dead_path(dimensions, otherSnakes, data):
-            current_options.remove(direction)
-    return current_options
+        if not dead_path(dimensions, otherSnakes, data):
+            print('Not a dead path '+direction)
+            new_options.append(direction)
+    if len(new_options) == 0:
+        return current_options
+    return new_options
 
 #return true if dimension in one away from a snake bigger than self
 def close_to_big_snake(dimensions, otherSnakes, size):
@@ -138,14 +145,20 @@ def close_to_big_snake(dimensions, otherSnakes, size):
 
 
 def remove_directions_close_to_big_snakes(options, option_dimensions, otherSnakes, size):
+    new_options = []
     for direction in options:
-        print(direction)
+        print('looking '+direction)
         if len(options) == 1:
             return [options[0]]
         dimensions = option_dimensions[direction]
         if close_to_big_snake(dimensions, otherSnakes, size):
-            options.remove(direction)
-    return options
+            print('Close to snake')
+            new_options.append(direction)
+        else:
+            print('not Close to Snake')
+    if len(new_options) == 0:
+        return options
+    return new_options
 
 def get_food_data(data):
     return data['board']['food']

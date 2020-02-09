@@ -48,15 +48,9 @@ def start():
 
     return start_response(color)
 
-
-@bottle.post('/move')
-def move():
-    print('move')
-    data = bottle.request.json
-    food = data['board']['food']
+def get_current_options(data):
     height = data['board']['height']
     width = data['board']['width']
-    health = data['you']['health']
     selfPieces = []
     for bodyPiece in data['you']['body']:
         selfPieces.append(bodyPiece)
@@ -66,13 +60,17 @@ def move():
         for piece in snake['body']:
             snakeBody.append(piece)
         otherSnakes.append(snakeBody)
-    print(otherSnakes)
-    print(selfPieces)
+    return ['up', 'down', 'left', 'right']
 
-    #print(json.dumps(data))
 
-    directions = ['up', 'down', 'left', 'right']
-    direction = random.choice(directions)
+@bottle.post('/move')
+def move():
+    print('move')
+    data = bottle.request.json
+    food = data['board']['food']
+    health = data['you']['health']
+    current_options = get_current_options(data)
+    direction = random.choice(current_options)
 
     return move_response(direction)
 

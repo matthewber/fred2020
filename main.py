@@ -56,7 +56,16 @@ def out_of_bounds(dimensions, data):
         return True
     return False
 
-def on_another_snake(dimensions):
+def snake_in_dimensions(dimensions , snake):
+    for bodyPiece in snake:
+        if bodyPiece['x'] == dimensions[0] and bodyPiece['y'] == dimensions[1]:
+            return True
+    return False
+
+def on_another_snake(dimensions, otherSnakes):
+    for snake in otherSnakes:
+        if snake_in_dimensions(dimensions, snake):
+            return True
     return False
 
 def get_current_options(data):
@@ -75,7 +84,7 @@ def get_current_options(data):
         if len(options) == 1:
             return options[0]
         dimensions = option_dimensions[direction]
-        if out_of_bounds(dimensions, data) or on_another_snake(dimensions):
+        if out_of_bounds(dimensions, data) or on_another_snake(dimensions, otherSnakes):
             options.remove(direction)
     print(option_dimensions)
     return options

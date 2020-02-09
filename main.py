@@ -121,6 +121,7 @@ def close_to_big_snake(dimensions, otherSnakes, size):
             if count == 2:
                 return True
     return False
+    
 
 def remove_directions_close_to_big_snakes(options, option_dimensions, otherSnakes, size):
     for direction in options:

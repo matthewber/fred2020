@@ -130,12 +130,13 @@ def remove_directions_close_to_big_snakes(options, option_dimensions, otherSnake
         dimensions = option_dimensions[direction]
         if close_to_big_snake(dimensions, otherSnakes, size):
             options.remove(direction)
-    return directions
+    return options
 
 def choose_best_option(current_options, option_dimensions, otherSnakes, size):
     if len(current_options) == 1:
         return current_options[0]
     current_options = remove_dead_paths(current_options, option_dimensions, otherSnakes)
+    #if food low move towards food
     current_options = remove_directions_close_to_big_snakes(current_options, option_dimensions, otherSnakes, size)#remove paths that are 1 away from a bigger snakes
     #tend to food if close by and not near other otherSnakes
     #else maybe chase tail

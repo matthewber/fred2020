@@ -53,7 +53,6 @@ def start():
 def move():
     print('move')
     data = bottle.request.json
-    snakes = data['snakes']
     food = data['board']['food']
     height = data['board']['height']
     width = data['board']['width']

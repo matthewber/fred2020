@@ -106,6 +106,8 @@ def dead_path(point, otherSnakes, data):
     if len(possible_dimensions) == 0:
         return True
     print('Not a dead path')
+    print('possible dimensions = ')
+    print(possible_dimensions)
     return False
 
 def remove_dead_paths(current_options, option_dimensions, otherSnakes, data):

@@ -116,7 +116,8 @@ def close_to_big_snake(dimensions, otherSnakes, size):
         option_dimensions = get_option_dimensions(snakeHead)
         for option in option_dimensions:
             if snakeHead['x'] == option[0] and snakeHead['y'] == option[1]:
-                count = count + 1
+                if len(snake['body'] >= size):
+                    count = count + 1
             if count == 2:
                 return True
     return False

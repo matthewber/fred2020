@@ -47,10 +47,20 @@ def start():
 
     return start_response(color)
 
-def get_current_options(data):
-    options = ['up', 'down', 'left', 'right']
+def out_of_bounds(dimensions):
     height = data['board']['height']
     width = data['board']['width']
+    if dimensions[0] < 0 or dimensions[0] >= width:
+        return True
+    if dimentions[1] < 0 or dimentions[1] >= height:
+        return True
+    return False
+
+def on_another_snake(dimensions):
+    return False
+
+def get_current_options(data):
+    options = ['up', 'down', 'left', 'right']
     selfPieces = []
     for bodyPiece in data['you']['body']:
         selfPieces.append(bodyPiece)
@@ -60,10 +70,19 @@ def get_current_options(data):
         for piece in snake['body']:
             snakeBody.append(piece)
         otherSnakes.append(snakeBody)
-    option_dimensions = {'up':[selfPieces[0]['x'],selfPieces[0]['y']],'down':[selfPieces[0]['x'],selfPieces[0]['y']],'left':[selfPieces[0]['x'],selfPieces[0]['y']],'right':[selfPieces[0]['x'],selfPieces[0]['y']]}
+    option_dimensions = {'up':[selfPieces[0]['x'],selfPieces[0]['y']-1],'down':[selfPieces[0]['x'],selfPieces[0]['y']+1],'left':[selfPieces[0]['x']-1,selfPieces[0]['y']],'right':[selfPieces[0]['x']+1,selfPieces[0]['y']]}
+    for direction in option_dimensions:
+        if len(options) == 1:
+            return options[0]
+        dimensions = option_dimensions[direction]
+        if out_of_bounds(dimensions, data) or on_another_snake(dimensions):
+            options.remove(direction)
     print(option_dimensions)
     return options
 
+def choose_best_option(current_options):
+    choice = random.choice(current_options)
+    return choice
 
 @bottle.post('/move')
 def move():
@@ -71,8 +90,7 @@ def move():
     food = data['board']['food']
     health = data['you']['health']
     current_options = get_current_options(data)
-    direction = random.choice(current_options)
-
+    direction = choose_best_option(current_options)
     return move_response(direction)
 
 

@@ -85,7 +85,7 @@ def get_current_options(data):
     option_dimensions = {'up':[selfPieces[0]['x'],selfPieces[0]['y']-1],'down':[selfPieces[0]['x'],selfPieces[0]['y']+1],'left':[selfPieces[0]['x']-1,selfPieces[0]['y']],'right':[selfPieces[0]['x']+1,selfPieces[0]['y']]}
     for direction in option_dimensions:
         if len(options) == 1:
-            return options[0], option_dimensions, otherSnakes
+            return [options[0]], option_dimensions, otherSnakes
         dimensions = option_dimensions[direction]
         if out_of_bounds(dimensions, data) or on_another_snake(dimensions, otherSnakes):
             #dont remove direction if its a tail and the head isn't one away from a food

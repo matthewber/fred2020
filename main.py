@@ -84,7 +84,7 @@ def get_current_options(data, size):
         for piece in snake['body']:
             snakeBody.append(piece)
         otherSnakes.append(snakeBody)
-    option_dimensions = get_option_dimensions(selfPieces[0])#{'up':[selfPieces[0]['x'],selfPieces[0]['y']-1],'down':[selfPieces[0]['x'],selfPieces[0]['y']+1],'left':[selfPieces[0]['x']-1,selfPieces[0]['y']],'right':[selfPieces[0]['x']+1,selfPieces[0]['y']]}
+    option_dimensions = get_option_dimensions(selfPieces[0])
     for direction in option_dimensions:
         if len(options) == 1:
             return [options[0]], option_dimensions, otherSnakes
@@ -95,16 +95,25 @@ def get_current_options(data, size):
             options.remove(direction)
     return options, option_dimensions, otherSnakes
 
-def dead_path(dimensions, otherSnakes):
-    #check to see if the path is a dead endpoint
+def dead_path(point, otherSnakes, data):
+    possible_dimensions = ['up', 'down', 'left', 'right']
+    #return true if 4 directions blocked in new direction
+    for direction in possible_dimensions:
+        if out_of_bounds(point, data):
+            possible_dimensions.remove(direction)
+        if on_another_snake(point, otherSnakes):
+            possible_dimensions.remove(direction)
+    if len(possible_dimensions) == 0:
+        return True
+    print('Not a dead path')
     return False
 
-def remove_dead_paths(current_options, option_dimensions, otherSnakes):
+def remove_dead_paths(current_options, option_dimensions, otherSnakes, data):
     for direction in current_options:
         if len(current_options) == 1:
             return [current_options[0]]
         dimensions = option_dimensions[direction]
-        if dead_path(dimensions, otherSnakes):
+        if dead_path(dimensions, otherSnakes, data):
             current_options.remove(direction)
     return current_options
 
@@ -151,10 +160,10 @@ def move_to_health(options, option_dimensions, food):
 def remove_poor_paths(options, option_dimensions, otherSnakes):
     return options
 
-def choose_best_option(current_options, option_dimensions, otherSnakes, size, health, food):
+def choose_best_option(current_options, option_dimensions, otherSnakes, size, health, food, data):
     if len(current_options) == 1:
         return current_options[0]
-    current_options = remove_dead_paths(current_options, option_dimensions, otherSnakes)
+    current_options = remove_dead_paths(current_options, option_dimensions, otherSnakes, data)
     print('removing big snake directs')
     print(size)
     current_options = remove_directions_close_to_big_snakes(current_options, option_dimensions, otherSnakes, size)#remove paths that are 1 away from a bigger snakes
@@ -177,7 +186,7 @@ def move():
     size = len(data['you']['body'])
     food = get_food_data(data)
     current_options, option_dimensions, otherSnakes = get_current_options(data, size)
-    direction = choose_best_option(current_options, option_dimensions, otherSnakes, size, health, food)
+    direction = choose_best_option(current_options, option_dimensions, otherSnakes, size, health, food, data)
     return move_response(direction)
 
 

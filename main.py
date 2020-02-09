@@ -182,7 +182,7 @@ def choose_best_option(current_options, option_dimensions, otherSnakes, size, he
         return current_options[0]
     current_options = remove_dead_paths(current_options, option_dimensions, otherSnakes, data)
     print('removing big snake directs')
-    print(size)
+    print('size is'+str(size))
     current_options = remove_directions_close_to_big_snakes(current_options, option_dimensions, otherSnakes, size)#remove paths that are 1 away from a bigger snakes
     print('HEALTH: '+str(health))
     #if health < 50:

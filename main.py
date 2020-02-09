@@ -55,7 +55,22 @@ def start():
 def move():
     print('move')
     data = bottle.request.json
-    print(data)
+    snakes = data['snakes']
+    food = data['board']['food']
+    height = data['board']['height']
+    width = data['board']['width']
+    health = data['you']['health']
+    selfPieces = []
+    for bodyPiece in data['you']['body']:
+        selfPieces.append(bodyPiece)
+    otherSnakes = []
+    for snake in data['snakes']:
+        snakeBody = []
+        for piece in snake['body']:
+            snakeBody.append(piece)
+        otherSnakes.append(snakeBody)
+    print(otherSnakes)
+    print(selfPieces)
     #health = data['you']['health']
     #headx = data['you']['body']['data'][0]['x']
     #heady = data['you']['body']['data'][0]['y']

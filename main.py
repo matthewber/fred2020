@@ -47,7 +47,7 @@ def start():
 
     return start_response(color)
 
-def out_of_bounds(dimensions):
+def out_of_bounds(dimensions, data):
     height = data['board']['height']
     width = data['board']['width']
     if dimensions[0] < 0 or dimensions[0] >= width:
@@ -75,7 +75,7 @@ def get_current_options(data):
         if len(options) == 1:
             return options[0]
         dimensions = option_dimensions[direction]
-        if out_of_bounds(dimensions) or on_another_snake(dimensions):
+        if out_of_bounds(dimensions, data) or on_another_snake(dimensions):
             options.remove(direction)
     print(option_dimensions)
     return options

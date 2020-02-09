@@ -227,7 +227,7 @@ def move():
     food = data['board']['food']
     health = data['you']['health']
     food = get_food_data(data)
-    current_options, option_dimensions, otherSnakes, size = get_current_options(data)
+    current_options, option_dimensions, otherSnakes = get_current_options(data)
     direction = choose_best_option(current_options, option_dimensions, otherSnakes, health, food, data)
     return move_response(direction)
 

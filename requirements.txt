@@ -1,4 +1,4 @@
 bottle
 gevent
 greenlet
-gunicorn
+waitress

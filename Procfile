@@ -1,1 +1,1 @@
-web: gunicorn app.main:application --worker-class gevent
+waitress-serve --listen=*:8000 myapp.wsgi:application

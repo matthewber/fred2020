@@ -34,7 +34,6 @@ def ping():
 
 @bottle.post('/start')
 def start():
-    print('start')
     data = bottle.request.json
 
     """
@@ -61,14 +60,13 @@ def get_current_options(data):
         for piece in snake['body']:
             snakeBody.append(piece)
         otherSnakes.append(snakeBody)
-    option_dimensions = {'up':[selfPieces[0]['x'],selfPieces[0]['y']]}
+    option_dimensions = {'up':[selfPieces[0]['x'],selfPieces[0]['y']],'down':[selfPieces[0]['x'],selfPieces[0]['y']],'left':[selfPieces[0]['x'],selfPieces[0]['y']],'right':[selfPieces[0]['x'],selfPieces[0]['y']]}
     print(option_dimensions)
     return options
 
 
 @bottle.post('/move')
 def move():
-    print('move')
     data = bottle.request.json
     food = data['board']['food']
     health = data['you']['health']

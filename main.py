@@ -92,7 +92,7 @@ def update_snake_lengths():
 
 
 
-def get_current_options(data, size):
+def get_current_options(data):
     options = ['up', 'down', 'left', 'right']
     selfPieces = []
     for bodyPiece in data['you']['body']:

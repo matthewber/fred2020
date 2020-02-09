@@ -100,9 +100,11 @@ def dead_path(point, otherSnakes, data):
     #return true if 4 directions blocked in new direction
     for direction in possible_dimensions:
         if out_of_bounds(point, data):
-            possible_dimensions.remove(direction)
+            print('OUT of bounds'+direction)
+            possible_dimensions = possible_dimensions.remove(direction)
         if on_another_snake(point, otherSnakes):
-            possible_dimensions.remove(direction)
+            print('On another snake'+direction)
+            possible_dimensions = possible_dimensions.remove(direction)
     if len(possible_dimensions) == 0:
         return True
     print('Not a dead path')

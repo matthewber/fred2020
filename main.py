@@ -2,6 +2,7 @@ import json
 import os
 import random
 import bottle
+import waitress
 
 from api import ping_response, start_response, move_response, end_response
 
@@ -82,6 +83,7 @@ def end():
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
+waitress.serve(application, host='0.0.0.0',port=os.getenv('PORT', '8080'))
 
 if __name__ == '__main__':
     bottle.run(

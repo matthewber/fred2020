@@ -52,7 +52,7 @@ def out_of_bounds(dimensions, data):
     width = data['board']['width']
     if dimensions[0] < 0 or dimensions[0] >= width:
         return True
-    if dimentions[1] < 0 or dimentions[1] >= height:
+    if dimensions[1] < 0 or dimensions[1] >= height:
         return True
     return False
 

@@ -64,7 +64,7 @@ def move():
     for bodyPiece in data['you']['body']:
         selfPieces.append(bodyPiece)
     otherSnakes = []
-    for snake in data['snakes']:
+    for snake in data['board']['snakes']:
         snakeBody = []
         for piece in snake['body']:
             snakeBody.append(piece)

@@ -69,7 +69,7 @@ def on_another_snake(dimensions, otherSnakes):
     return False
 
 def get_option_dimensions(piece):
-    return {'up':[piece['x'],piece['y']-1],'down':[piece['x'],piece['y']+1],'left':[piece['x']-1,selfPieces[0]['y']],'right':[piece['x']+1,piece['y']]}
+    return {'up':[piece['x'],piece['y']-1],'down':[piece['x'],piece['y']+1],'left':[piece['x']-1,piece['y']],'right':[piece['x']+1,piece['y']]}
 
 
 

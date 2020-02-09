@@ -69,7 +69,7 @@ def on_another_snake(dimensions, otherSnakes):
     return False
 
 def get_option_dimensions(piece):
-    return {'up':[piece['x'],piece['y']-1],'down':piece['x'],piece['y']+1],'left':piece['x']-1,selfPieces[0]['y']],'right':piece['x']+1,piece['y']]}
+    return {'up':[piece['x'],piece['y']-1],'down':[piece['x'],piece['y']+1],'left':[piece['x']-1,selfPieces[0]['y']],'right':[piece['x']+1,piece['y']]}
 
 
 
@@ -121,7 +121,7 @@ def close_to_big_snake(dimensions, otherSnakes, size):
             if count == 2:
                 return True
     return False
-    
+
 
 def remove_directions_close_to_big_snakes(options, option_dimensions, otherSnakes, size):
     for direction in options:

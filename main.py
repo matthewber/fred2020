@@ -74,7 +74,7 @@ def on_another_snake(dimensions, otherSnakes):
 def get_option_dimensions(piece):
     return {'up':[piece['x'],piece['y']-1],'down':[piece['x'],piece['y']+1],'left':[piece['x']-1,piece['y']],'right':[piece['x']+1,piece['y']]}
 
-def update_snake_lengths():
+def update_snake_lengths(data):
     global last_turn_food_locations
     global snake_sizes
     for snake in data['board']['snakes']:

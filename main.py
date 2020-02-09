@@ -112,11 +112,11 @@ def remove_dead_paths(current_options, option_dimensions, otherSnakes):
 def close_to_big_snake(dimensions, otherSnakes, size):
     count = 0 #one snake expected (self) only return true if 2 found
     for snake in otherSnakes:
-        snakeHead = snake['body'][0]
+        snakeHead = snake[0]
         option_dimensions = get_option_dimensions(snakeHead)
         for option in option_dimensions:
             if snakeHead['x'] == option[0] and snakeHead['y'] == option[1]:
-                if len(snake['body'] >= size):
+                if len(snake >= size):
                     count = count + 1
             if count == 2:
                 return True

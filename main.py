@@ -208,9 +208,9 @@ def choose_best_option(current_options, option_dimensions, otherSnakes, health, 
     if len(current_options) == 1:
         return current_options[0]
     current_options = remove_dead_paths(current_options, option_dimensions, otherSnakes, data)
-    print('removing big snake directs')
+    #print('removing big snake directs')
     current_options = remove_directions_close_to_big_snakes(current_options, option_dimensions, otherSnakes, snake_sizes['matthewber / fred2020'])#remove paths that are 1 away from a bigger snakes
-    print('HEALTH: '+str(health))
+    #print('HEALTH: '+str(health))
     #if health < 50:
     current_options = move_to_health(current_options, option_dimensions, food)#moves to health piece if one away
     current_options = remove_poor_paths(current_options, option_dimensions, otherSnakes)
@@ -229,6 +229,7 @@ def move():
     food = get_food_data(data)
     current_options, option_dimensions, otherSnakes = get_current_options(data)
     direction = choose_best_option(current_options, option_dimensions, otherSnakes, health, food, data)
+    print('my current size = '+snake_sizes['matthewber / fred2020'])
     return move_response(direction)
 
 

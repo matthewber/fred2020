@@ -68,10 +68,12 @@ def on_another_snake(dimensions, otherSnakes):
             return True
     return False
 
-def remove_directions_close_to_big_snakes(directions):
-    return directions
+def get_option_dimensions(piece):
+    return {'up':[piece['x'],piece['y']-1],'down':piece['x'],piece['y']+1],'left':piece['x']-1,selfPieces[0]['y']],'right':piece['x']+1,piece['y']]}
 
-def get_current_options(data):
+
+
+def get_current_options(data, size):
     options = ['up', 'down', 'left', 'right']
     selfPieces = []
     for bodyPiece in data['you']['body']:
@@ -82,7 +84,7 @@ def get_current_options(data):
         for piece in snake['body']:
             snakeBody.append(piece)
         otherSnakes.append(snakeBody)
-    option_dimensions = {'up':[selfPieces[0]['x'],selfPieces[0]['y']-1],'down':[selfPieces[0]['x'],selfPieces[0]['y']+1],'left':[selfPieces[0]['x']-1,selfPieces[0]['y']],'right':[selfPieces[0]['x']+1,selfPieces[0]['y']]}
+    option_dimensions = get_option_dimensions(selfPieces[0])#{'up':[selfPieces[0]['x'],selfPieces[0]['y']-1],'down':[selfPieces[0]['x'],selfPieces[0]['y']+1],'left':[selfPieces[0]['x']-1,selfPieces[0]['y']],'right':[selfPieces[0]['x']+1,selfPieces[0]['y']]}
     for direction in option_dimensions:
         if len(options) == 1:
             return [options[0]], option_dimensions, otherSnakes
@@ -100,19 +102,43 @@ def dead_path(dimensions, otherSnakes):
 def remove_dead_paths(current_options, option_dimensions, otherSnakes):
     for direction in current_options:
         if len(current_options) == 1:
-            return current_options[0]
+            return [current_options[0]]
         dimensions = option_dimensions[direction]
         if dead_path(dimensions, otherSnakes):
             current_options.remove(direction)
     return current_options
 
-def choose_best_option(current_options, option_dimensions, otherSnakes):
+#return true if dimension in one away from a snake bigger than self
+def close_to_big_snake(dimensions, otherSnakes, size):
+    count = 0 #one snake expected (self) only return true if 2 found
+    for snake in otherSnakes:
+        snakeHead = snake['body'][0]
+        option_dimensions = get_option_dimensions(snakeHead)
+        for option in option_dimensions:
+            if snakeHead['x'] == option[0] and snakeHead['y'] == option[1]:
+                count = count + 1
+            if count == 2:
+                return True
+    return False
+
+def remove_directions_close_to_big_snakes(options, option_dimensions, otherSnakes, size):
+    for direction in options:
+        if len(options) == 1:
+            return [options[0]]
+        dimensions = option_dimensions[direction]
+        if close_to_big_snake(dimensions, otherSnakes, size):
+            options.remove(direction)
+    return directions
+
+def choose_best_option(current_options, option_dimensions, otherSnakes, size):
     if len(current_options) == 1:
         return current_options[0]
     current_options = remove_dead_paths(current_options, option_dimensions, otherSnakes)
+    current_options = remove_directions_close_to_big_snakes(current_options, option_dimensions, otherSnakes, size)#remove paths that are 1 away from a bigger snakes
     #tend to food if close by and not near other otherSnakes
     #else maybe chase tail
     #or choose the most open direction
+    # or tend to run away from other snakes
     choice = random.choice(current_options)
     return choice
 
@@ -121,8 +147,9 @@ def move():
     data = bottle.request.json
     food = data['board']['food']
     health = data['you']['health']
-    current_options, option_dimensions, otherSnakes = get_current_options(data)
-    direction = choose_best_option(current_options, option_dimensions, otherSnakes)
+    size = len(data['you']['body'])
+    current_options, option_dimensions, otherSnakes = get_current_options(data, size)
+    direction = choose_best_option(current_options, option_dimensions, otherSnakes, size)
     return move_response(direction)
 
 

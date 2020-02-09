@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT nuncio:fred2020
+web: python main.py

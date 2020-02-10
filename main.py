@@ -126,7 +126,6 @@ def get_current_options(data):
     return options, option_dimensions, otherSnakes
 
 def dead_path(point, otherSnakes, data):
-    point = [point['x'], point['y']]
     height = data['board']['height']
     width = data['board']['width']
     board = []
@@ -134,6 +133,7 @@ def dead_path(point, otherSnakes, data):
         board.append([])
         for j in range(height):
             board[i].append(False)
+    print(board)
     for snake in otherSnakes:
         for piece in snake:
             board[piece[0]][piece[1]] = True

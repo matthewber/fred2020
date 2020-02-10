@@ -162,10 +162,16 @@ def close_to_big_snake(dimensions, otherSnakes, size):
         snakeHead = snake[0]
         option_dimensions = get_option_dimensions(snakeHead)
         for option in option_dimensions:
+            print('testing option:')
+            print(option)
             if snakeHead['x'] == option[0] and snakeHead['y'] == option[1]:
                 if len(snake >= size):
                     print('Incrementing bigger snake count to '+str(count))
                     count = count + 1
+                else:
+                    print('Close snake is smaller')
+            else:
+                print('no snake at this option')
             if count == 2:
                 return True
     return False
@@ -204,21 +210,75 @@ def move_to_health(options, option_dimensions, food):
 def remove_poor_paths(options, option_dimensions, otherSnakes):
     return options
 
+def isOtherSnakeCloserToFood(food, data):
+    #return True if other snake closer to food than you
+    return False
+
+def distance_from_food(food, data):
+    distx = abs(data['you']['body'][0]['x'] - food['x'])
+    disty = abs(data['you']['body'][0]['y'] - food['y'])
+    return distx + disty
+
+
+
+def get_safe_food(data, food):
+    safe_food_distance = 5
+    safe_food = []
+    for item in food:
+        if distance_from_food(item, data) < safe_food_distance:
+            if not isOtherSnakeCloserToFood(item, data):
+                safe_food.append(item)
+
+def choose_best_food(food_options, data):
+    #return closest piece of food
+    #return best direction to go towards when good food exists
+    #if big snakes in area take that into account
+    #for each snake
+    # if nearby snakeis  bigger same size or only 1 smaller run other direction
+    return random.choice(food_options)
+
+#returns string direction
+def best_directions_towards_food(options, desired_food, data):
+    best_food = choose_best_food(desired_food, data)
+    my_head = data['you']['body'][0]
+    if 'right' in options and best_food['x'] > my_head['x']:
+        return 'right'
+    if 'left' in options and best_food['x'] < my_head['x']:
+        return 'left'
+    if 'down' in options and best_food['y'] < my_head['y']:
+        return 'down'
+    if 'up' in options and best_food['y'] > my_head['y']:
+        return 'up'
+    return random.choice(options)
+
+#returns string
+def choose_from_remaining_options(remaining_options, data, food):
+    desired_food = get_safe_food(data, food)
+    if len(desired_food[0]) == 0:
+        #if low on food aggressivley seek food
+        #else if tail nearby chase tail
+        #else go to open area
+        return random.choice(remaining_options)
+    direction = best_directions_towards_food(remaining_options, desired_food, data)
+    return direction
+
+
 def choose_best_option(current_options, option_dimensions, otherSnakes, health, food, data):
     if len(current_options) == 1:
         return current_options[0]
+    #order functions in order of precedence
     current_options = remove_dead_paths(current_options, option_dimensions, otherSnakes, data)
+
     #print('removing big snake directs')
     current_options = remove_directions_close_to_big_snakes(current_options, option_dimensions, otherSnakes, snake_sizes['matthewber / fred2020'])#remove paths that are 1 away from a bigger snakes
-    #print('HEALTH: '+str(health))
-    #if health < 50:
     current_options = move_to_health(current_options, option_dimensions, food)#moves to health piece if one away
     current_options = remove_poor_paths(current_options, option_dimensions, otherSnakes)
-    #tend to food if close by and not near other otherSnakes
+
+    #!!!!tend to food if close by and not near other otherSnakes
     #else maybe chase tail
     #or choose the most open direction
     # or tend to run away from other snakes
-    choice = random.choice(current_options)
+    choice = choose_from_remaining_options(current_options, data, food)
     return choice
 
 @bottle.post('/move')

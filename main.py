@@ -132,7 +132,7 @@ def dead_path(point, otherSnakes, data):
     for j in range(height):
         board.append([])
         for i in range(width):
-            board[i].append(False)
+            board[j].append(False)
     print(board)
     for snake in otherSnakes:
         for piece in snake:

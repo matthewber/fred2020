@@ -255,7 +255,7 @@ def best_directions_towards_food(options, desired_food, data):
 #returns string
 def choose_from_remaining_options(remaining_options, data, food):
     desired_food = get_safe_food(data, food)
-    if len(desired_food[0]) == 0:
+    if len(desired_food) == 0:
         #if low on food aggressivley seek food
         #else if tail nearby chase tail
         #else go to open area

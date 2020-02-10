@@ -228,6 +228,7 @@ def get_safe_food(data, food):
         if distance_from_food(item, data) < safe_food_distance:
             if not isOtherSnakeCloserToFood(item, data):
                 safe_food.append(item)
+    return safe_food
 
 def choose_best_food(food_options, data):
     #return closest piece of food

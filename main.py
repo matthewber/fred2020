@@ -129,10 +129,10 @@ def dead_path(point, otherSnakes, data):
     height = data['board']['height']
     width = data['board']['width']
     board = []
-    for j in range(height):
+    for i in range(width):
         board.append([])
-        for i in range(width):
-            board[j].append(False)
+        for j in range(height):
+            board[i].append(False)
     print(board)
     for snake in otherSnakes:
         for piece in snake:
@@ -153,7 +153,7 @@ def dead_path(point, otherSnakes, data):
         up_blocked = True
     else:
         up_blocked = False
-    if down_coord[0] < 0 or board[down_coord[0]][down_coord[1]] == True:
+    if down_coord[0] < int(height-1) or board[down_coord[0]][down_coord[1]] == True:
         down_blocked = True
     else:
         down_blocked = False

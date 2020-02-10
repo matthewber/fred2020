@@ -53,8 +53,10 @@ def out_of_bounds(dimensions, data):
     height = data['board']['height']
     width = data['board']['width']
     if dimensions[0] < 0 or dimensions[0] >= width:
+        print('out of bounds', str(dimensions[0]), str(dimensions[1]))
         return True
     if dimensions[1] < 0 or dimensions[1] >= height:
+        print('out of bounds', str(dimensions[0]), str(dimensions[1]))
         return True
     print('dimensions not out of bounds: ', str(dimensions[0]), str(dimensions[1]))
     return False
@@ -124,6 +126,34 @@ def get_current_options(data):
     return options, option_dimensions, otherSnakes
 
 def dead_path(point, otherSnakes, data):
+    height = data['board']['height']
+    width = data['board']['width']
+    board = []
+    for i in range(width):
+        board.append([])
+        for j in range(height):
+            board[i].append(False)
+    for snake in otherSnakes:
+        for piece in snake:
+            board[piece[0]][piece[1]] = True
+    left_coord = [piece[0]-1, piece[1]]
+    right_coord = [piece[0]+1, piece[1]]
+    up_coord = [piece[0], piece[1]-1]
+    down_coord = [piece[0], piece[1]+1]
+    if left_coord[0] < 0 or board[left_coord[0]][left_coord[1]] == True:
+        left_blocked = True
+    if right_coord[0] < int(width-1) or board[right_coord[0]][right_coord[1]] == True:
+        right_blocked = True
+    if up_coord[1] < 0 or board[up_coord[0]][up_coord[1]] == True:
+        up_blocked = True
+    if down_coord[0] < 0 or board[down_coord[0]][down_coord[1]] == True:
+        down_blocked = True
+    if left_blocked and right_blocked and up_blocked and down_blocked:
+        print('spot DEAD')
+        return True
+    return False
+
+def dead_path_old(point, otherSnakes, data):
     possible_directions = ['up', 'down', 'left', 'right']
     #return true if 4 directions blocked in new direction
     direction_blocked = {'up':False, 'down':False, 'left':False, 'right':False }

@@ -145,7 +145,7 @@ def dead_path(point, otherSnakes, data):
         left_blocked = True
     else:
         left_blocked = False
-    if right_coord[0] < int(width-1) or board[right_coord[0]][right_coord[1]] == True:
+    if right_coord[0] >= int(width) or board[right_coord[0]][right_coord[1]] == True:
         right_blocked = True
     else:
         right_blocked = False
@@ -153,7 +153,7 @@ def dead_path(point, otherSnakes, data):
         up_blocked = True
     else:
         up_blocked = False
-    if down_coord[0] < int(height-1) or board[down_coord[0]][down_coord[1]] == True:
+    if down_coord[0] >= int(height) or board[down_coord[0]][down_coord[1]] == True:
         down_blocked = True
     else:
         down_blocked = False

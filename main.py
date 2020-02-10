@@ -136,8 +136,7 @@ def dead_path(point, otherSnakes, data):
     print(board)
     for snake in otherSnakes:
         for piece in snake:
-            print(piece)
-            board[piece[0]][piece[1]] = True
+            board[piece['x']][piece['y']] = True
     left_coord = [point[0]-1, point[1]]
     right_coord = [point[0]+1, point[1]]
     up_coord = [point[0], point[1]-1]

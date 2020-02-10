@@ -222,7 +222,7 @@ def distance_from_food(food, data):
 
 
 def get_safe_food(data, food):
-    safe_food_distance = 5
+    safe_food_distance = 20
     safe_food = []
     for item in food:
         if distance_from_food(item, data) < safe_food_distance:
@@ -256,6 +256,7 @@ def best_directions_towards_food(options, desired_food, data):
 def choose_from_remaining_options(remaining_options, data, food):
     desired_food = get_safe_food(data, food)
     if len(desired_food) == 0:
+        print('no desired food')
         #if low on food aggressivley seek food
         #else if tail nearby chase tail
         #else go to open area

@@ -204,7 +204,7 @@ def close_to_big_snake(dimensions, otherSnakes, size):
             print('testing option:')
             print(option)
             if snakeHead['x'] == option[0] and snakeHead['y'] == option[1]:
-                if len(snake >= size):
+                if True#len(snake) >= size:
                     print('Incrementing bigger snake count to '+str(count))
                     count = count + 1
                 else:

@@ -230,13 +230,20 @@ def get_safe_food(data, food):
                 safe_food.append(item)
     return safe_food
 
-def choose_best_food(food_options, data):
-    #return closest piece of food
     #return best direction to go towards when good food exists
     #if big snakes in area take that into account
     #for each snake
     # if nearby snakeis  bigger same size or only 1 smaller run other direction
-    return random.choice(food_options)
+def choose_best_food(food_options, data):
+    closest_food = {'x': 0, 'y': 0, 'value':999}
+    for food in food_options:
+        food_dist = distance_from_food(food, data)
+        if food_dist < closest_food['value']:
+            closest_food['value'] = food_dist
+            closest_food['x'] = food['x']
+            closest_food['y'] = food['y']
+    return closest_food
+
 
 #returns string direction
 def best_directions_towards_food(options, desired_food, data):

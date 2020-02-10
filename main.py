@@ -3,6 +3,7 @@ import os
 import random
 import bottle
 import waitress
+import brain
 
 from api import ping_response, start_response, move_response, end_response
 
@@ -338,12 +339,13 @@ def choose_best_option(current_options, option_dimensions, otherSnakes, health, 
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-    food = data['board']['food']
-    health = data['you']['health']
-    food = get_food_data(data)
-    current_options, option_dimensions, otherSnakes = get_current_options(data)
-    direction = choose_best_option(current_options, option_dimensions, otherSnakes, health, food, data)
-    print('my current size = '+str(snake_sizes['matthewber / fred2020']))
+    direction = brain.get_direction(data)
+    #food = data['board']['food']
+    #health = data['you']['health']
+    #food = get_food_data(data)
+    #current_options, option_dimensions, otherSnakes = get_current_options(data)
+    #direction = choose_best_option(current_options, option_dimensions, otherSnakes, health, food, data)
+    #print('my current size = '+str(snake_sizes['matthewber / fred2020']))
     return move_response(direction)
 
 

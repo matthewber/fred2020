@@ -136,11 +136,12 @@ def dead_path(point, otherSnakes, data):
     print(board)
     for snake in otherSnakes:
         for piece in snake:
+            print(piece)
             board[piece[0]][piece[1]] = True
-    left_coord = [piece[0]-1, piece[1]]
-    right_coord = [piece[0]+1, piece[1]]
-    up_coord = [piece[0], piece[1]-1]
-    down_coord = [piece[0], piece[1]+1]
+    left_coord = [point[0]-1, point[1]]
+    right_coord = [point[0]+1, point[1]]
+    up_coord = [point[0], point[1]-1]
+    down_coord = [point[0], point[1]+1]
     if left_coord[0] < 0 or board[left_coord[0]][left_coord[1]] == True:
         left_blocked = True
     if right_coord[0] < int(width-1) or board[right_coord[0]][right_coord[1]] == True:

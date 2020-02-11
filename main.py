@@ -338,7 +338,7 @@ def choose_best_option(current_options, option_dimensions, otherSnakes, health, 
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-    direction = get_direction(data, 1)
+    direction = get_direction(data)
     #food = data['board']['food']
     #health = data['you']['health']
     #food = get_food_data(data)

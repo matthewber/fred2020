@@ -357,7 +357,7 @@ def update_snake_sizes(data):
 
 def initialize_board(data):
     board = []
-    for i in range(data['board']['width']:
+    for i in range(data['board']['width']):
         board.append()
         for j in range(data['board']['height']):
             board[i].append({'type':'empty', 'n_until_empty': 0, 'n_until_filled': 0})

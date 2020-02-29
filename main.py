@@ -7,7 +7,7 @@ from brain import get_direction
 from api import ping_response, start_response, move_response, end_response
 
 snake_sizes = {}
-last_turn_food_locations = {}
+last_turn_food_locations = []
 
 @bottle.route('/')
 def index():
@@ -48,7 +48,7 @@ def start():
     color = "#00FF00"
 
     return start_response(color)
-
+"""
 def out_of_bounds(dimensions, data):
     height = data['board']['height']
     width = data['board']['width']
@@ -75,29 +75,11 @@ def on_another_snake(dimensions, otherSnakes):
 
 def get_option_dimensions(piece):
     return {'up':[piece['x'],piece['y']-1],'down':[piece['x'],piece['y']+1],'left':[piece['x']-1,piece['y']],'right':[piece['x']+1,piece['y']]}
-
-def update_snake_lengths(data):
-    global last_turn_food_locations
-    global snake_sizes
-    for snake in data['board']['snakes']:
-        snake_exists = False
-        for key in snake_sizes:
-            if key == snake['name']:
-                snake_exists = True
-        if not snake_exists:
-            snake_sizes[snake['name']] = 3
-        else:
-            snakeHead = snake['body'][0]
-            for food in last_turn_food_locations:
-                if food['x'] == snakeHead['x'] and food['y'] == snakeHead['y']:
-                    snake_sizes[snake['name']] = snake_sizes[snake['name']] + 1
-    #update last food locations
-    last_turn_food_locations = []
-    for food in data['board']['food']:
-        last_turn_food_locations.append(food)
+"""
 
 
 
+"""
 def get_current_options(data):
     options = ['up', 'down', 'left', 'right']
     selfPieces = []
@@ -334,11 +316,93 @@ def choose_best_option(current_options, option_dimensions, otherSnakes, health, 
     # or tend to run away from other snakes
     choice = choose_from_remaining_options(current_options, data, food)
     return choice
+"""
+
+def snake_exists(name):
+    for key in snake_sizes:
+        if key == name:
+            return True
+    return False
+
+def update_food_locations(data):
+    global last_turn_food_locations
+    last_turn_food_locations = []
+    for food in data['board']['food']:
+        last_turn_food_locations.append(food)
+
+def update_snake_size(snake_name, snake_head):
+    global last_turn_food_locations
+    global snake_sizes
+    for food in last_turn_food_locations:
+        if food['x'] == snake_head['x'] and food['y'] == snake_head['y']:
+            snake_sizes[snake_name] = snake_sizes[snake_name] + 1
+            return
+
+def initialize_snake_size(snake_name):
+    global snake_sizes
+    snake_sizes[snake_name] = 3
+
+def update_snake_size(snake):
+    global snake_sizes
+    s_name = snake['name']
+    s_head = snake['body'][0]
+    if not snake_exists(s_name):
+        initialize_snake_size(s_name)
+    else:
+        update_snake_size(s_name, s_head)
+
+def update_snake_sizes(data):
+    for snake in data['board']['snakes']:
+        update_snake_size(snake)
+
+def initialize_board(data):
+    board = []
+    for i in range(data['board']['width']:
+        board.append()
+        for j in range(data['board']['height']):
+            board[i].append({'type':'empty', 'n_until_empty': 0, 'n_until_filled': 0})
+    return board
+
+def snake_type(snake_name):
+    if snake_name == 'matthewber / fred2020':
+        return 'self'
+    return 'snake'
+
+def add_snake_to_board(snake, board):
+    size = snake_sizes[snake['name']]
+    for i in range(size):
+        piece = snake['body'][i]
+        element = board[piece['x']][piece['y']]
+        element['type'] = snake_type(snake['name'])
+        board[piece['x']][piece['y']] = element
+    return board
+
+def add_snakes_to_board(data, board):
+    for snake in data['board']['snakes']:
+        board = add_snake_to_board(snake, board)
+    return board
+
+def make_board(data):
+    board = initialize_board(data)
+    board = add_snakes_to_board(data, board)
+
+def proccess_data(data):
+    update_snake_sizes(data)
+    update_food_locations(data)
+    board = make_board(data)
+    return board
+
+
+#def make_snakes(data):#
+    #snakes = []
+    #for snake in snake_sizes:
+    #return snakes
 
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-    direction = get_direction(data)
+    board = proccess_data(data)
+    direction = get_direction(board)
     #food = data['board']['food']
     #health = data['you']['health']
     #food = get_food_data(data)

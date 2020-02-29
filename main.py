@@ -342,8 +342,7 @@ def initialize_snake_size(snake_name):
     global snake_sizes
     snake_sizes[snake_name] = 3
 
-def update_snake_size(snake):
-    global snake_sizes
+def snake_size(snake):
     s_name = snake['name']
     s_head = snake['body'][0]
     if not snake_exists(s_name):
@@ -353,7 +352,7 @@ def update_snake_size(snake):
 
 def update_snake_sizes(data):
     for snake in data['board']['snakes']:
-        update_snake_size(snake)
+        snake_size(snake)
 
 def initialize_board(data):
     board = []

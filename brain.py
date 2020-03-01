@@ -2,8 +2,8 @@
 
 
 
-def get_current_options(data):
-    print(data)
+def get_current_options(board):
+    print(board)
     return ['left']
 
 def get_direction(board):

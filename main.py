@@ -384,6 +384,7 @@ def add_snakes_to_board(data, board):
 def make_board(data):
     board = initialize_board(data)
     board = add_snakes_to_board(data, board)
+    return board
 
 def proccess_data(data):
     update_snake_sizes(data)

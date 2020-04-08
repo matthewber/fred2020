@@ -388,6 +388,7 @@ def make_board(data):
 
 def proccess_data(data):
     update_snake_sizes(data)
+    print(snake_sizes)
     update_food_locations(data)
     board = make_board(data)
     return board

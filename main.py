@@ -363,6 +363,7 @@ def initialize_board(data):
     return board
 
 def snake_type(snake_name):
+    print('Snake Name: '+snake_name)
     if snake_name == 'matthewber / fred2020':
         return 'self'
     return 'snake'

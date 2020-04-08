@@ -37,7 +37,10 @@ def ping():
 @bottle.post('/start')
 def start():
     data = bottle.request.json
-
+    global snake_sizes
+    global last_turn_food_locations
+    snake_sizes = {}
+    last_turn_food_locations = []
     """
     TODO: If you intend to have a stateful snake AI,
             initialize your snake state here using the

@@ -335,6 +335,9 @@ def update_snake_size(snake_name, snake_head):
     global snake_sizes
     for food in last_turn_food_locations:
         if food['x'] == snake_head['x'] and food['y'] == snake_head['y']:
+            print('Food WAS ATE LAST TURN')
+            print(food)
+            print(snake_head)
             snake_sizes[snake_name] = snake_sizes[snake_name] + 1
             return
 
@@ -363,8 +366,7 @@ def initialize_board(data):
     return board
 
 def snake_type(snake_name):
-    print('Snake Name: '+snake_name)
-    if snake_name == 'matthewber / fred2020':
+    if 'fred2020' in snake_name:
         return 'self'
     return 'snake'
 

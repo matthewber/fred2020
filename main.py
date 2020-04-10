@@ -409,7 +409,7 @@ def proccess_data(data):
 def move():
     data = bottle.request.json
     board = proccess_data(data)
-    direction = get_direction(board)
+    direction = get_direction(board, data)
     #food = data['board']['food']
     #health = data['you']['health']
     #food = get_food_data(data)
@@ -423,7 +423,7 @@ def move():
 @bottle.post('/end')
 def end():
     data = bottle.request.json
-    print(json.dumps(data))
+    #print(json.dumps(data))
     return end_response()
 
 

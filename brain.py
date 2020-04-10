@@ -15,8 +15,8 @@ def get_adjacent_pieces(board, data):
     return False
 
 
-def get_current_options(board):
-    adjacent_pieces = get_adjacent_pieces()
+def get_current_options(board, data):
+    adjacent_pieces = get_adjacent_pieces(board, data)
     return ['right','left','up']
 
 

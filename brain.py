@@ -7,7 +7,6 @@ def distance_from_food(food, data):
 
 def get_self_head(data):
     head = data['you']['body'][0]
-    print(head)
     return head
 
 def update_x(x, direction):
@@ -33,14 +32,26 @@ def get_move(direction, head):
 def get_move_options(board, data):
     move_options = []
     self_head = get_self_head(data)
-    directions = ['up', 'left', 'right']
+    directions = ['up', 'left', 'right', 'down']
     for direction in directions:
         move = get_move(direction, self_head)
         move_options.append(move)
     return move_options
 
-def is_in_bounds(option, data):
+def x_in_bounds(x, data):
+    width = data['board']['width']
+    if x < 0 or x >= width:
+        return False
     return True
+
+def y_in_bounds(y, data):
+    height = data['board']['height']
+    if y < 0 or y >= height:
+        return False
+    return True
+
+def is_in_bounds(option, data):
+    return (x_in_bounds(option['x']) and y_in_bounds(option['y']))
 
 def is_valid_move(option, data, board):
     if not is_in_bounds(option, data):

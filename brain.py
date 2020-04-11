@@ -51,7 +51,7 @@ def y_in_bounds(y, data):
     return True
 
 def is_in_bounds(option, data):
-    return (x_in_bounds(option['x']) and y_in_bounds(option['y']))
+    return (x_in_bounds(option['x'], data) and y_in_bounds(option['y'], data))
 
 def is_valid_move(option, data, board):
     if not is_in_bounds(option, data):

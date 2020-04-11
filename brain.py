@@ -54,7 +54,12 @@ def is_in_bounds(option, data):
     return (x_in_bounds(option['x'], data) and y_in_bounds(option['y'], data))
 
 def is_space_empty(option, board):
+    print('x')
+    print(option['x'])
+    print('y')
+    print(option['y'])
     boardPiece = board[option['x']][option['y']]
+    print(boardPiece)
     if boardPiece['type'] == 'empty':
         return True
     return False

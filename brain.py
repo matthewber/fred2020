@@ -70,8 +70,11 @@ def is_valid_move(option, data, board):
 def get_current_options(board, data):
     curr_options = []
     options = get_move_options(board, data)
+    print(options)
     for option in options:
+        print(option)
         if is_valid_move(option, data, board):
+            print('VALID')
             curr_options.append(option)
     return curr_options
 

@@ -62,9 +62,6 @@ def update_snake_size(snake_name, snake_head):
     global snake_sizes
     for food in last_turn_food_locations:
         if food['x'] == snake_head['x'] and food['y'] == snake_head['y']:
-            print('Food WAS ATE LAST TURN')
-            print(food)
-            print(snake_head)
             snake_sizes[snake_name] = snake_sizes[snake_name] + 1
             return
 
@@ -130,10 +127,15 @@ def add_danger_zone_near_head(snake, board):
             print(e)
     return board
 
+def is_snake_bigger_than_me(snake):
+    my_size = snake_sizes['fred2020']
+    snake_size = snake_sizes[snake['name']]
+    return snake_size >= my_size
+
 def add_snakes_to_board(data, board):
     for snake in data['board']['snakes']:
         board = add_snake_to_board(snake, board)
-        if not snake['name'] == 'fred2020':
+        if not snake['name'] == 'fred2020' and is_snake_bigger_than_me(snake):# and other snake is bigger than me
             board = add_danger_zone_near_head(snake, board)
     return board
 

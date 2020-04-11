@@ -71,6 +71,7 @@ def is_backup_move(option, data, board):
     if not is_in_bounds(option, data):
         return False
     boardPiece = board[option['x']][option['y']]
+    print(boardPiece)
     type = boardPiece['type']
     if type == 'empty' or type == 'DANGER':
         return True
@@ -88,7 +89,10 @@ def get_current_options(board, data):
         if is_backup_move(option, data, board):
             backup_options.append(option)
     if len(curr_options) == 0:
+        print('USING BACKUP OPTIONS')
         return backup_options
+    print('CURR OPTIONS')
+    print(curr_options)
     return curr_options
 
 def get_closest_food(data):

@@ -10,6 +10,20 @@ def get_self_head(data):
     print(head)
     return head
 
+def update_x(x, direction):
+    if direction == 'left':
+        return x-1
+    elif direction == 'right':
+        return x+1
+    return x
+
+def update_y(y, direction):
+    if direction == 'up':
+        return y-1
+    elif direction == 'down':
+        return y+1
+    return y
+
 def get_move(direction, head):
     x = update_x(head['x'], direction)
     y = update_y(head['y'], direction)

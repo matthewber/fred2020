@@ -54,12 +54,7 @@ def is_in_bounds(option, data):
     return (x_in_bounds(option['x'], data) and y_in_bounds(option['y'], data))
 
 def is_space_empty(option, board):
-    print('x')
-    print(option['x'])
-    print('y')
-    print(option['y'])
     boardPiece = board[option['x']][option['y']]
-    print(boardPiece)
     if boardPiece['type'] == 'empty':
         return True
     return False
@@ -79,7 +74,16 @@ def get_current_options(board, data):
             curr_options.append(option)
     return curr_options
 
+def go_to_closest_food(curr_options, data):
+    for food in data['food']:
+        print(food)
+    return curr_options[0]
+
 def get_direction(board, data):
     curr_options = get_current_options(board, data)
-    print(curr_options)
+    if len(curr_options) == 1:
+        return curr_options[0]['direction']
+    if data['you']['health'] < 25:
+        option = go_to_closest_food(curr_options, data)
+        return option['direction']
     return curr_options[0]['direction']

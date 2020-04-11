@@ -142,6 +142,7 @@ def add_snakes_to_board(data, board):
 def make_board(data):
     board = initialize_board(data)
     board = add_snakes_to_board(data, board)
+    # add counts of how many adjacent open squares there are to the move options
     return board
 
 def proccess_data(data):
@@ -156,6 +157,8 @@ def move():
     data = bottle.request.json
     board = proccess_data(data)
     direction = get_direction(board, data)
+    print('MOVING')
+    print(direction)
     #food = data['board']['food']
     #health = data['you']['health']
     #food = get_food_data(data)

@@ -67,7 +67,9 @@ def is_valid_move(option, data, board):
         return False
     return True
 
-def is_backup_move(option, board):
+def is_backup_move(option, data, board):
+    if not is_in_bounds(option, data):
+        return False
     boardPiece = board[option['x']][option['y']]
     type = boardPiece['type']
     if type == 'empty' or type == 'DANGER':
@@ -83,7 +85,7 @@ def get_current_options(board, data):
         print(option)
         if is_valid_move(option, data, board):
             curr_options.append(option)
-        if is_backup_move(option, board):
+        if is_backup_move(option, data, board):
             backup_options.append(option)
     if len(curr_options) == 0:
         return backup_options

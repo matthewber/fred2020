@@ -125,10 +125,11 @@ def add_danger_zone_near_head(snake, board):
 
 def add_snakes_to_board(data, board):
     for snake in data['board']['snakes']:
-        if snake == None:
-            continue
-        board = add_snake_to_board(snake, board)
-        board = add_danger_zone_near_head(snake, board)
+        try:
+            board = add_snake_to_board(snake, board)
+            board = add_danger_zone_near_head(snake, board)
+        except Exception as e:
+            print(e)
     return board
 
 def make_board(data):

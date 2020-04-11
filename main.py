@@ -123,12 +123,6 @@ def proccess_data(data):
     board = make_board(data)
     return board
 
-
-#def make_snakes(data):#
-    #snakes = []
-    #for snake in snake_sizes:
-    #return snakes
-
 @bottle.post('/move')
 def move():
     data = bottle.request.json

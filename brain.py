@@ -53,9 +53,16 @@ def y_in_bounds(y, data):
 def is_in_bounds(option, data):
     return (x_in_bounds(option['x'], data) and y_in_bounds(option['y'], data))
 
+def is_space_empty(option, board):
+    boardPiece = board[option['x']][option['y']]
+    if boardPiece['type'] == 'empty':
+        return True
+    return False
+
 def is_valid_move(option, data, board):
     if not is_in_bounds(option, data):
         return False
+    if is_space_empty(option, board)
     return True
 
 def get_current_options(board, data):

@@ -67,7 +67,7 @@ def is_space_empty(option, board):
 def is_valid_move(option, data, board):
     if not is_in_bounds(option, data):
         return False
-    if is_space_empty(option, board):
+    if not is_space_empty(option, board):
         return False
     return True
 

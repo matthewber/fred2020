@@ -25,14 +25,19 @@ def get_move_options(board, data):
         move_options.append(move)
     return move_options
 
-def is_valid_move(option, data):
+def is_in_bounds(option, data):
+    return True
+
+def is_valid_move(option, data, board):
+    if not is_in_bounds(option, data):
+        return False
     return True
 
 def get_current_options(board, data):
     curr_options = []
     options = get_move_options(board, data)
     for option in options:
-        if is_valid_move(option, data):
+        if is_valid_move(option, data, board):
             curr_options.append(option)
     return curr_options
 

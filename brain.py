@@ -33,7 +33,7 @@ def get_move(direction, head):
 def get_move_options(board, data):
     move_options = []
     self_head = get_self_head(data)
-    directions = ['up', 'left', 'right', 'down']
+    directions = ['up', 'down', 'left', 'right']
     for direction in directions:
         move = get_move(direction, self_head)
         move_options.append(move)

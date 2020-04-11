@@ -1,8 +1,9 @@
 
 #returns the number of turns it would take to reach this food item
 def distance_from_food(food, data):
-    distx = abs(data['you']['body'][0]['x'] - food['x'])
-    disty = abs(data['you']['body'][0]['y'] - food['y'])
+    head = get_self_head(data)
+    distx = abs(head['x'] - food['x'])
+    disty = abs(head['y'] - food['y'])
     return distx + disty
 
 def get_self_head(data):
@@ -74,16 +75,41 @@ def get_current_options(board, data):
             curr_options.append(option)
     return curr_options
 
-def go_to_closest_food(curr_options, data):
+def get_closest_food(data):
+    closest_food = {'d':999999999}
     for food in data['board']['food']:
-        print(food)
-    return curr_options[0]
+        dist = distance_from_food(food, data)
+        food_item = {'d':dist,'x':food['x'],'y':food['y']}
+        if food_item['d'] < closest_food['d']:
+            closest_food = food_item
+    return closest_food
+
+def is_move_in_options(move, options):
+    for option in options:
+        if option['direction'] == move:
+            return True
+    return False
+
+def go_to_closest_food(curr_options, data):
+    closest_food = get_closest_food(data):
+    head = get_self_head(data)
+    if head['x'] > closest_food['x'] and is_move_in_options('left',curr_options):
+        return 'left'
+    elif head['x'] < closest_food['x'] and is_move_in_options('right', curr_options):
+        return 'right'
+    elif head['y'] > closest_food['y'] and is_move_in_options('up', curr_options):
+        return 'up'
+    elif head['y'] < closest_food['y'] and is_move_in_options('down', curr_options):
+        return 'down'
+    print('ERROR FINDING FOOD')
+
+    return curr_options[0]['direction']
 
 def get_direction(board, data):
     curr_options = get_current_options(board, data)
     if len(curr_options) == 1:
         return curr_options[0]['direction']
     if data['you']['health'] < 25:
-        option = go_to_closest_food(curr_options, data)
-        return option['direction']
+        direction = go_to_closest_food(curr_options, data)
+        return direction
     return curr_options[0]['direction']

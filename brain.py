@@ -67,15 +67,26 @@ def is_valid_move(option, data, board):
         return False
     return True
 
+def is_backup_move(option, board):
+    boardPiece = board[option['x']][option['y']]
+    type = boardPiece['type']
+    if type == 'empty' or type == 'DANGER':
+        return True
+    return False
+
 def get_current_options(board, data):
     curr_options = []
+    backup_options = []
     options = get_move_options(board, data)
     print(options)
     for option in options:
         print(option)
         if is_valid_move(option, data, board):
-            print('VALID')
             curr_options.append(option)
+        if is_backup_move(option, board):
+            backup_options.append(option)
+    if len(curr_options) == 0:
+        return backup_options
     return curr_options
 
 def get_closest_food(data):
@@ -114,4 +125,7 @@ def get_direction(board, data):
     if data['you']['health'] < 35:
         direction = go_to_closest_food(curr_options, data)
         return direction
+    # next things to add:
+    #    don't go down dead routes
+    #    kill snakes when you have them in a vulnerable position
     return curr_options[0]['direction']

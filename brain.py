@@ -91,7 +91,7 @@ def is_move_in_options(move, options):
     return False
 
 def go_to_closest_food(curr_options, data):
-    closest_food = get_closest_food(data):
+    closest_food = get_closest_food(data)
     head = get_self_head(data)
     if head['x'] > closest_food['x'] and is_move_in_options('left',curr_options):
         return 'left'

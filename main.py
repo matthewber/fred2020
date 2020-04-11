@@ -100,10 +100,14 @@ def snake_type(snake_name):
 def add_snake_to_board(snake, board):
     size = snake_sizes[snake['name']]
     for i in range(size):
-        piece = snake['body'][i]
-        element = board[piece['x']][piece['y']]
-        element['type'] = snake_type(snake['name'])
-        board[piece['x']][piece['y']] = element
+        try:
+            piece = snake['body'][i]
+            element = board[piece['x']][piece['y']]
+            element['type'] = snake_type(snake['name'])
+            board[piece['x']][piece['y']] = element
+        except Exception as e:
+            print(e)
+            print('SNAKE SIZE ERROR')
     return board
 
 def add_snakes_to_board(data, board):

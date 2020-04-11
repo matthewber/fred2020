@@ -128,7 +128,7 @@ def get_direction(board, data):
     curr_options = get_current_options(board, data)
     if len(curr_options) == 1:
         return curr_options[0]['direction']
-    if data['you']['health'] < 35:
+    if data['you']['health'] < 75:
         direction = go_to_closest_food(curr_options, data)
         return direction
     # next things to add:

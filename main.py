@@ -133,7 +133,8 @@ def add_danger_zone_near_head(snake, board):
 def add_snakes_to_board(data, board):
     for snake in data['board']['snakes']:
         board = add_snake_to_board(snake, board)
-        board = add_danger_zone_near_head(snake, board)
+        if not snake['name'] == 'fred2020':
+            board = add_danger_zone_near_head(snake, board)
     return board
 
 def make_board(data):

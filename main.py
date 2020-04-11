@@ -110,9 +110,23 @@ def add_snake_to_board(snake, board):
             print('SNAKE SIZE ERROR')
     return board
 
+def add_danger_zone_near_head(snake, board):
+    head = snake['body'][0]
+    for dx in [-1, 1]:
+        element = board[head['x']+dx][head['y']]
+        if element['type'] == 'empty':
+            element['type'] = 'DANGER'
+        board[head['x']+dx][head['y']] = element
+    for dy in [-1, 1]:
+        element = board[head['x']][head['y']+dy]
+        if element['type'] == 'empty':
+            element['type'] = 'DANGER'
+        board[head['x']][head['y']+dy] = element
+
 def add_snakes_to_board(data, board):
     for snake in data['board']['snakes']:
         board = add_snake_to_board(snake, board)
+        board = add_danger_zone_near_head(snake, board)
     return board
 
 def make_board(data):

@@ -75,7 +75,7 @@ def get_current_options(board, data):
     return curr_options
 
 def go_to_closest_food(curr_options, data):
-    for food in data['food']:
+    for food in data['board']['food']:
         print(food)
     return curr_options[0]
 

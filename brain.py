@@ -140,7 +140,9 @@ def calc_connected_open_squares(option, board):
     return adj
 
 def remove_dead_paths(curr_options, board):
-    new_options = []
+    ok_options = []
+    good_options = []
+    great_options = []
     for option in curr_options:
         try:
             adj = calc_connected_open_squares(option, board)
@@ -148,12 +150,20 @@ def remove_dead_paths(curr_options, board):
             print(adj)
             option['connected_open_squares'] = adj
             if adj > 0:
-                new_options.append(option)
+                ok_options.append(option)
+            if adj > 1:
+                good_options.append(option)
+            if adj > 2:
+                great_options.append(option)
         except Exception as e:
             print(e)
-    if len(new_options) < 1:
-        return curr_options
-    return new_options
+    if len(great_options) > 0:
+        return great_options
+    if len(good_options) > 0:
+        return good_options
+    if len(ok_options) > 0:
+        return ok_options
+    return curr_options
 
 def kill_scenarios(curr_options, board):
     #if you find food next to a wall and are in correct possition, trap other snake

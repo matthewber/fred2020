@@ -3,7 +3,7 @@ import os
 import random
 import bottle
 import waitress
-from brain import get_direction
+from brain import *
 from api import ping_response, start_response, move_response, end_response
 
 snake_sizes = {}
@@ -147,6 +147,8 @@ def add_snakes_to_board(data, board):
 def add_adjacent_open_squares(data, board):
     self_head = get_self_head(data)
     options = get_move_options(board, data)
+    for option in options:
+        print(option)
     return board
 
 def make_board(data):

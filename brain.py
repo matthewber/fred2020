@@ -90,6 +90,7 @@ def get_current_options(board, data):
             backup_options.append(option)
     if len(curr_options) == 0:
         print('USING BACKUP OPTIONS')
+        print(backup_options)
         return backup_options
     print('CURR OPTIONS')
     print(curr_options)
@@ -175,11 +176,14 @@ def kill_scenarios(curr_options, board):
     return kill_scenarios
 
 def get_direction(board, data):
-
+    print('FINDING DIRECTIONS')
     curr_options = get_current_options(board, data)
+    print('CURRENT OPTIONS')
+    print(curr_options)
     if len(curr_options) == 1:
+        print('ONE OPTION AVAILABLE')
         return curr_options[0]['direction']
-
+    print('REMOVING DEAD PATHS')
     curr_options = remove_dead_paths(curr_options, board)
     if len(curr_options) == 1:
         return curr_options[0]['direction']

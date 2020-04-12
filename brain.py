@@ -125,12 +125,19 @@ def go_to_closest_food(curr_options, data):
     print('ERROR FINDING FOOD')
     return curr_options[0]['direction']
 
+def get_adjacent_pieces(piece, board):
+    return []
+
 def calc_connected_open_squares(option, board):
+    adj = 0
+    for piece in get_adjacent_pieces(option, board):
+        if is_valid_move(option, data, board):
+            adj = adj + 1
     return 999
 
 def remove_dead_paths(curr_options, board):
     new_options = []
-    for option in options:
+    for option in curr_options:
         try:
             adj = calc_connected_open_squares(option, board)
             print('OPEN ADJACENT SQUARES')

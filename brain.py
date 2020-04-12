@@ -140,12 +140,14 @@ def calc_connected_open_squares(option, data, board):
             adj = adj + 1
     return adj
 
-def remove_dead_paths(curr_options, board):
+def remove_dead_paths(curr_options, data, board):
     ok_options = []
     good_options = []
     great_options = []
     for option in curr_options:
         try:
+            print('FINDING OPEN ADJACENT SQUARES FOR ')
+            print(option)
             adj = calc_connected_open_squares(option, data, board)
             print('OPEN ADJACENT SQUARES')
             print(adj)
@@ -158,6 +160,7 @@ def remove_dead_paths(curr_options, board):
                 great_options.append(option)
         except Exception as e:
             print(e)
+            print("REMOVING DEAD PATH ERROR")
     if len(great_options) > 0:
         return great_options
     if len(good_options) > 0:
@@ -184,7 +187,7 @@ def get_direction(board, data):
         print('ONE OPTION AVAILABLE')
         return curr_options[0]['direction']
     print('REMOVING DEAD PATHS')
-    curr_options = remove_dead_paths(curr_options, board)
+    curr_options = remove_dead_paths(curr_options, data, board)
     if len(curr_options) == 1:
         return curr_options[0]['direction']
 

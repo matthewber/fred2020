@@ -141,8 +141,8 @@ def get_direction(board, data):
         return curr_options[0]['direction']
     curr_options = remove_dead_paths(curr_options, board)
     kill_options = kill_scenarios(curr_options, board)
-    if len(kill_scenarios) > 0:
-        return kill_scenarios[0]['direction']
+    if len(kill_options) > 0:
+        return kill_options[0]['direction']
 
     # look at the next move and treat possible move locations of other snakes as filled. Make sure there are two possible moves from this next location
     # when counting the number of adjacent empty spaces, and determining if an out, take into consideration where the next snake heads' move will be

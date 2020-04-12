@@ -118,7 +118,7 @@ def add_danger_zone_near_head(snake, board):
     # if an other snake has only one option for moving, mark as a very desirable location (only if that snake is smaller)
     if is_snake_bigger_than_me(snake):
         type = 'DANGER'
-    elif snake_has_1_option(snake):
+    elif snake_has_1_option(snake, board):
         type = "VERY DESIRABLE"
     else:
         type = "DESIRABLE"

@@ -172,7 +172,7 @@ def get_direction(board, data):
 
     curr_options = remove_dead_paths(curr_options, board)
     if len(curr_options) == 1:
-        return curr_options[0]['direction
+        return curr_options[0]['direction']
 
     kill_options = kill_scenarios(curr_options, board)
     if len(kill_options) > 0:

@@ -144,9 +144,15 @@ def add_snakes_to_board(data, board):
             board = add_danger_zone_near_head(snake, board)
     return board
 
+def add_adjacent_open_squares(data, board):
+    self_head = get_self_head(data)
+    options = get_move_options(board, data)
+    return board
+
 def make_board(data):
     board = initialize_board(data)
     board = add_snakes_to_board(data, board)
+    board = add_adjacent_open_squares(data, board)
     # add counts of how many adjacent open squares there are to the move options
     return board
 
@@ -164,7 +170,6 @@ def move():
     direction = get_direction(board, data)
     print('MOVING')
     print(direction)
-    
     return move_response(direction)
 
 

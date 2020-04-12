@@ -133,7 +133,7 @@ def get_adjacent_pieces(piece, board):
         adjacent_pieces.append(move)
     return adjacent_pieces
 
-def calc_connected_open_squares(option, board):
+def calc_connected_open_squares(option, data, board):
     adj = 0
     for piece in get_adjacent_pieces(option, board):
         if is_valid_move(option, data, board):
@@ -146,7 +146,7 @@ def remove_dead_paths(curr_options, board):
     great_options = []
     for option in curr_options:
         try:
-            adj = calc_connected_open_squares(option, board)
+            adj = calc_connected_open_squares(option, data, board)
             print('OPEN ADJACENT SQUARES')
             print(adj)
             option['connected_open_squares'] = adj

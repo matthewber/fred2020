@@ -164,8 +164,8 @@ def remove_dead_paths(curr_options, data, board):
         except Exception as e:
             print(e)
             print("REMOVING DEAD PATH ERROR")
-    if len(great_options) > 0:
-        return great_options
+    #if len(great_options) > 0:
+    #    return great_options
     if len(good_options) > 0:
         return good_options
     if len(ok_options) > 0:
@@ -191,6 +191,8 @@ def get_direction(board, data):
         return curr_options[0]['direction']
     print('DETECTING IF SNAKE IS TRAPPED')
     #detect if snake needs to make certain moves to become untrapped
+    print('LOOKING FOR CLOSE SNAKES TO RUN AWAY FROM ')
+    #if you are the closest snake to a given food, and it is close by, move towards it
     print('REMOVING DEAD PATHS')
     curr_options = remove_dead_paths(curr_options, data, board)
     if len(curr_options) == 1:

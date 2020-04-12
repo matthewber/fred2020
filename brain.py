@@ -56,7 +56,7 @@ def is_in_bounds(option, data):
 
 def is_space_empty(option, board):
     boardPiece = board[option['x']][option['y']]
-    if boardPiece['type'] == 'empty':
+    if boardPiece['type'] in ['empty','DESIRABLE', 'VERY DESIRABLE']:
         return True
     return False
 
@@ -73,7 +73,7 @@ def is_backup_move(option, data, board):
     boardPiece = board[option['x']][option['y']]
     print(boardPiece)
     type = boardPiece['type']
-    if type == 'empty' or type == 'DANGER':
+    if type in ['empty','DANGER','DESIRABLE', 'VERY DESIRABLE']:
         return True
     return False
 

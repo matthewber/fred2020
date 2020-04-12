@@ -137,6 +137,8 @@ def calc_connected_open_squares(option, data, board):
     adj = 0
     for piece in get_adjacent_pieces(option, board):
         if is_valid_move(option, data, board):
+            print('VALID MOVE - INCREMENTING ADJ')
+            print(option)
             adj = adj + 1
     return adj
 
@@ -186,6 +188,8 @@ def get_direction(board, data):
     if len(curr_options) == 1:
         print('ONE OPTION AVAILABLE')
         return curr_options[0]['direction']
+    print('DETECTING IF SNAKE IS TRAPPED')
+    #detect if snake needs to make certain moves to become untrapped
     print('REMOVING DEAD PATHS')
     curr_options = remove_dead_paths(curr_options, data, board)
     if len(curr_options) == 1:

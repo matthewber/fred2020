@@ -125,13 +125,31 @@ def go_to_closest_food(curr_options, data):
     print('ERROR FINDING FOOD')
     return curr_options[0]['direction']
 
+def calc_connected_open_squares(option, board):
+    return 999
+
 def remove_dead_paths(curr_options, board):
-    return curr_options
+    new_options = []
+    for option in options:
+        try:
+            adj = calc_connected_open_squares(option, board)
+            print('OPEN ADJACENT SQUARES')
+            print(adj)
+            option['connected_open_squares'] = adj
+            if adj > 3:
+                new_options.append(option)
+        except Exception as e:
+            print(e)
+    if len(new_option) < 1:
+        return curr_options
+    return new_options
 
 def kill_scenarios(curr_options, board):
+    #if you find food next to a wall and are in correct possition, trap other snake
     kill_scenarios = []
     for option in curr_options:
         if board[option['x']][option['y']]['type'] in ['DESIRABLE', 'VERY DESIRABLE']:
+            print('ATTEMPTING KILLING MOVE')
             kill_scenarios.append(option)
     return kill_scenarios
 

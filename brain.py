@@ -147,7 +147,7 @@ def remove_dead_paths(curr_options, board):
                 new_options.append(option)
         except Exception as e:
             print(e)
-    if len(new_option) < 1:
+    if len(new_options) < 1:
         return curr_options
     return new_options
 

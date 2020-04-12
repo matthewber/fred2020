@@ -135,10 +135,11 @@ def get_adjacent_pieces(piece, board):
 
 def calc_connected_open_squares(option, data, board):
     adj = 0
-    for piece in get_adjacent_pieces(option, board):
-        if is_valid_move(option, data, board):
+    adj_pieces = get_adjacent_pieces(option, board)
+    for piece in adj_pieces:
+        if is_valid_move(piece, data, board):
             print('VALID MOVE - INCREMENTING ADJ')
-            print(option)
+            print(piece)
             adj = adj + 1
     return adj
 

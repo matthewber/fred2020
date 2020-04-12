@@ -110,15 +110,24 @@ def add_snake_to_board(snake, board):
             print('SNAKE SIZE ERROR')
     return board
 
+def snake_has_1_option(snake, board):
+    return False
+
 def add_danger_zone_near_head(snake, board):
     # set up desired spots next to the heads of small snakes. If much higher in size, and good amount of food, move in to kill (get to this spot)
     # if an other snake has only one option for moving, mark as a very desirable location (only if that snake is smaller)
+    if is_snake_bigger_than_me(snake):
+        type = 'DANGER'
+    elif snake_has_1_option(snake):
+        type = "VERY DESIRABLE"
+    else:
+        type = "DESIRABLE"
     head = snake['body'][0]
     for dx in [-1, 1]:
         try:
             element = board[head['x']+dx][head['y']]
             if element['type'] == 'empty':
-                element['type'] = 'DANGER'
+                element['type'] = type
             board[head['x']+dx][head['y']] = element
         except Exception as e:
             print(e)
@@ -126,7 +135,7 @@ def add_danger_zone_near_head(snake, board):
         try:
             element = board[head['x']][head['y']+dy]
             if element['type'] == 'empty':
-                element['type'] = 'DANGER'
+                element['type'] = type
             board[head['x']][head['y']+dy] = element
         except Exception as e:
             print(e)
@@ -140,7 +149,7 @@ def is_snake_bigger_than_me(snake):
 def add_snakes_to_board(data, board):
     for snake in data['board']['snakes']:
         board = add_snake_to_board(snake, board)
-        if not snake['name'] == 'fred2020' and is_snake_bigger_than_me(snake):# and other snake is bigger than me
+        if not snake['name'] == 'fred2020':# and other snake is bigger than me
             board = add_danger_zone_near_head(snake, board)
     return board
 
@@ -148,7 +157,7 @@ def add_adjacent_open_squares(data, board):
     self_head = get_self_head(data)
     options = get_move_options(board, data)
     for option in options:
-        print(option)
+        pass#adj = count_num_adjacent_squares(option, board)
     return board
 
 def make_board(data):

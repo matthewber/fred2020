@@ -111,7 +111,7 @@ def is_move_in_options(move, options):
     return False
 
 def go_to_closest_food(curr_options, data):
-    #dont choose that food item if it is closer to another snakes' head
+    #dont choose that food item if it is closer to another snakes' head (unless that snake is 3 or more smaller than you)
     closest_food = get_closest_food(data)
     head = get_self_head(data)
     if head['x'] > closest_food['x'] and is_move_in_options('left',curr_options):
@@ -125,12 +125,24 @@ def go_to_closest_food(curr_options, data):
     print('ERROR FINDING FOOD')
     return curr_options[0]['direction']
 
+def remove_dead_paths(curr_options, board):
+    return curr_options
+
+def kill_scenarios(curr_options, board):
+    kill_scenarios = []
+    for option in curr_options:
+        if board[option['x']][option['y']]['type'] in ['DESIRABLE', 'VERY DESIRABLE']:
+            kill_scenarios.append(option)
+    return kill_scenarios
+
 def get_direction(board, data):
     curr_options = get_current_options(board, data)
     if len(curr_options) == 1:
         return curr_options[0]['direction']
-    #if kill_scenario_exists(curr_options):
-    #    return execute_order_66()
+    curr_options = remove_dead_paths(curr_options, board)
+    kill_options = kill_scenarios(curr_options, board)
+    if len(kill_scenarios) > 0:
+        return kill_scenarios[0]['direction']
 
     # look at the next move and treat possible move locations of other snakes as filled. Make sure there are two possible moves from this next location
     # when counting the number of adjacent empty spaces, and determining if an out, take into consideration where the next snake heads' move will be

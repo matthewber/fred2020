@@ -111,6 +111,7 @@ def is_move_in_options(move, options):
     return False
 
 def go_to_closest_food(curr_options, data):
+    #dont choose that food item if it is closer to another snakes' head
     closest_food = get_closest_food(data)
     head = get_self_head(data)
     if head['x'] > closest_food['x'] and is_move_in_options('left',curr_options):
@@ -128,6 +129,16 @@ def get_direction(board, data):
     curr_options = get_current_options(board, data)
     if len(curr_options) == 1:
         return curr_options[0]['direction']
+    #if kill_scenario_exists(curr_options):
+    #    return execute_order_66()
+
+    # look at the next move and treat possible move locations of other snakes as filled. Make sure there are two possible moves from this next location
+    # when counting the number of adjacent empty spaces, and determining if an out, take into consideration where the next snake heads' move will be
+    #don't go into spot with few adjacent open pieces, unless out will appear soon
+    #dont enter a narrow hall with other snake heads nearby
+    #prioritize staying away from big snake heads!
+    # and not getting stuck against a wall and moving towards open areas
+    #choose from remaining options - add choosing to kill over food in certain scenarios
     if data['you']['health'] < 101:
         direction = go_to_closest_food(curr_options, data)
         return direction

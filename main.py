@@ -95,6 +95,9 @@ def snake_type(snake_name):
     return 'snake'
 
 def add_snake_to_board(snake, board):
+    #add different marker for a disapeering tail if food hasn't been eaten
+    #maybe: add marker to each piece of snake of how long until the tail, and of how far away snake's head is from another food item
+    #add marker to elements indicating how far they are from a wall or other snake piece (0 being an other snake piece)
     size = snake_sizes[snake['name']]
     for i in range(size):
         try:
@@ -108,6 +111,8 @@ def add_snake_to_board(snake, board):
     return board
 
 def add_danger_zone_near_head(snake, board):
+    # set up desired spots next to the heads of small snakes. If much higher in size, and good amount of food, move in to kill (get to this spot)
+    # if an other snake has only one option for moving, mark as a very desirable location (only if that snake is smaller)
     head = snake['body'][0]
     for dx in [-1, 1]:
         try:
@@ -159,12 +164,7 @@ def move():
     direction = get_direction(board, data)
     print('MOVING')
     print(direction)
-    #food = data['board']['food']
-    #health = data['you']['health']
-    #food = get_food_data(data)
-    #current_options, option_dimensions, otherSnakes = get_current_options(data)
-    #direction = choose_best_option(current_options, option_dimensions, otherSnakes, health, food, data)
-    #print('my current size = '+str(snake_sizes['matthewber / fred2020']))
+    
     return move_response(direction)
 
 

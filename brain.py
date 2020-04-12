@@ -126,14 +126,18 @@ def go_to_closest_food(curr_options, data):
     return curr_options[0]['direction']
 
 def get_adjacent_pieces(piece, board):
-    return []
+    adjacent_pieces = []
+    for direction in ['up','down','left','right']:
+        move = get_move(direction, piece)
+        adjacent_pieces.append(move)
+    return adjacent_pieces
 
 def calc_connected_open_squares(option, board):
     adj = 0
     for piece in get_adjacent_pieces(option, board):
         if is_valid_move(option, data, board):
             adj = adj + 1
-    return 999
+    return adj
 
 def remove_dead_paths(curr_options, board):
     new_options = []
@@ -143,7 +147,7 @@ def remove_dead_paths(curr_options, board):
             print('OPEN ADJACENT SQUARES')
             print(adj)
             option['connected_open_squares'] = adj
-            if adj > 3:
+            if adj > 0:
                 new_options.append(option)
         except Exception as e:
             print(e)
@@ -161,10 +165,15 @@ def kill_scenarios(curr_options, board):
     return kill_scenarios
 
 def get_direction(board, data):
+
     curr_options = get_current_options(board, data)
     if len(curr_options) == 1:
         return curr_options[0]['direction']
+
     curr_options = remove_dead_paths(curr_options, board)
+    if len(curr_options) == 1:
+        return curr_options[0]['direction
+
     kill_options = kill_scenarios(curr_options, board)
     if len(kill_options) > 0:
         return kill_options[0]['direction']

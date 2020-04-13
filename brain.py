@@ -157,6 +157,15 @@ def calc_connected_open_squares(option, data, board):
             adj = adj + 1
     return adj
 
+def is_big_snake_head(piece, data):
+    for snake in data['snakes']:
+        if (not 'fred2020' in snake['name']) and (is_snake_bigger_than_me(snake)):
+            head = snake['body'][0]
+            if piece['x'] == head['x'] and piece3['y'] == head['y']:
+                return True
+    return False
+
+
 def calc_2deep_connected_open_squares(option, data, board):
     print("CALCULATING 2 DEEP")
     adj = 0
@@ -167,6 +176,9 @@ def calc_2deep_connected_open_squares(option, data, board):
             adj2_pieces = get_adjacent_pieces(piece, board)
             for piece2 in adj2_pieces:
                 if not (option['x'] == piece2['x'] and option['y'] == piece2['y']):
+                    if is_big_snake_head(piece2, data):
+                        adj = adj - 3
+                        print('DEC 3')
                     if is_valid_move(piece2, data, board):
                         adj = adj + 1
                         adj3_pieces = get_adjacent_pieces(piece2, board)
@@ -174,6 +186,9 @@ def calc_2deep_connected_open_squares(option, data, board):
                             if not (piece3['x'] == piece['x'] and piece3['y'] == piece['y']):
                                 if is_valid_move(piece3, data, board):
                                     adj = adj + 1
+                                if is_big_snake_head(piece3, data):
+                                    print('DEC 2')
+                                    adj = adj - 2
     print("ADJ2 SCORE: based on 1-1-1 scoring for OPTION")
     print(option)
     print(adj)

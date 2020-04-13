@@ -293,8 +293,6 @@ def get_direction(board, data):
     kill_options = kill_scenarios(curr_options, board)
     if len(kill_options) > 0:
         return kill_options[0]['direction']
-
-
     # when counting the number of adjacent empty spaces, and determining if an out, take into consideration where the next snake heads' move will be
     #don't go into spot with few adjacent open pieces, unless out will appear soon
     #dont enter a narrow hall with other snake heads nearby

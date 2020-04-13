@@ -8,6 +8,7 @@ from api import ping_response, start_response, move_response, end_response
 
 snake_sizes = {}
 last_turn_food_locations = []
+saved_old_food = []
 
 @bottle.route('/')
 def index():
@@ -53,6 +54,7 @@ def snake_exists(name):
 
 def update_food_locations(data):
     global last_turn_food_locations
+    saved_old_food = last_turn_food_locations
     last_turn_food_locations = []
     for food in data['board']['food']:
         last_turn_food_locations.append(food)
@@ -95,7 +97,7 @@ def snake_type(snake_name):
     return 'snake'
 
 def did_snake_just_eat_food(snake_head):
-    for food in last_turn_food_locations:
+    for food in saved_old_food:
         if food['x'] == snake_head['x'] and food['y'] == snake_head['y']:
             return True
     return False
@@ -111,6 +113,7 @@ def add_snake_to_board(snake, board):
             element = board[piece['x']][piece['y']]
             element['type'] = snake_type(snake['name'])
             if (size > 3) and (i == size-1) and not did_snake_just_eat_food(snake['body'][0]):
+                print('TAIL DISAPEERING FOR '+snake['name'])
                 element['type'] = 'empty'
             board[piece['x']][piece['y']] = element
         except Exception as e:

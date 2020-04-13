@@ -158,6 +158,7 @@ def calc_connected_open_squares(option, data, board):
     return adj
 
 def calc_2deep_connected_open_squares(option, data, board):
+    print("CALCULATING 2 DEEP")
     adj = 0
     adj_pieces = get_adjacent_pieces(option, board)
     for piece in adj_pieces:

@@ -115,7 +115,7 @@ def closest_to_food(food, data):
     head = get_self_head(data)
     length_to_food = distance_from_food(food, head)
     for snake in data['board']['snakes']:
-        if not (snake['name'] == 'fred2020') and :
+        if not (snake['name'] == 'fred2020'):
             snake_head = snake['body'][0]
             snake_length_to_food = distance_from_food(food, snake_head)
             if snake_length_to_food < length_to_food:

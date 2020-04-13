@@ -198,7 +198,7 @@ def remove_dead_paths(curr_options, data, board):
     #if len(great_options) > 0:
     #    return great_options
     if len(good_options) > 0:
-        if data['turn'] < 75 or data['you']['health'] < 20:#Tunable PARAMETERS for testing or AI implementation
+        if data['turn'] < 10 or data['you']['health'] < 20:#Tunable PARAMETERS for testing or AI implementation
             return good_options
         #return good_options
     if len(ok_options) == 1:

@@ -97,6 +97,7 @@ def snake_type(snake_name):
     return 'snake'
 
 def did_snake_just_eat_food(snake_head):
+    print(saved_old_food)
     for food in saved_old_food:
         if food['x'] == snake_head['x'] and food['y'] == snake_head['y']:
             return True

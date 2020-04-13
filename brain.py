@@ -251,6 +251,10 @@ def get_direction(board, data):
     # if there is one exit of size 2, and another snake is one away from the exit, then move to escape
     print('LOOKING FOR CLOSE SNAKES TO RUN AWAY FROM ')
     #if you are the closest snake to a given food, and it is close by, move towards it
+    if data['you']['health'] < 15:
+        direction = go_to_closest_food(curr_options, data)
+        if not direction == 'False':
+            return direction
     print('REMOVING DEAD PATHS')
     curr_options = remove_dead_paths(curr_options, data, board)
     if len(curr_options) == 1:

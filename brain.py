@@ -123,9 +123,10 @@ def closest_to_food(food, data):
     return True
 
 def go_to_closest_food(curr_options, data):
-    #dont choose that food item if it is closer to another snakes' head (unless that snake is 3 or more smaller than you)
+    #(return false) if you are farther than 1 move away, dont choose a food without more than 2 open spaces next to it.
+    #
     closest_food = get_closest_food(data)
-    if not closest_to_food(closest_food, data):
+    if not closest_to_food(closest_food, data):#
         return 'False'
     head = get_self_head(data)
     if head['x'] > closest_food['x'] and is_move_in_options('left',curr_options):
@@ -156,6 +157,18 @@ def calc_connected_open_squares(option, data, board):
             adj = adj + 1
     return adj
 
+def calc_2deep_connected_open_squares(option, data, board):
+    adj = 0
+    adj_pieces = get_adjacent_pieces(option, board)
+    for piece in adj_pieces:
+        if is_valid_move(piece, data, board):
+            adj = adj + 2 #THESE VALUES FOR ADJ INCREMENTING AT DIFFERENT LEVELS CAN BE TUNED
+            adj2_pieces = get_adjacent_pieces(piece, board)
+            for piece2 in adj2_pieces:
+                if is_valid_move(piece2, data, board):
+                    adj = adj + 3
+    return adj
+
 # look at the next move and treat possible move locations of other snakes as filled. Make sure there are two possible moves from this next location
 def remove_dead_paths(curr_options, data, board):
     ok_options = []
@@ -181,9 +194,18 @@ def remove_dead_paths(curr_options, data, board):
     #if len(great_options) > 0:
     #    return great_options
     if len(good_options) > 0:
-        return good_options
+        if data['turn'] < 75:#Tunable PARAMETER for testing or AI implementation
+            return good_options
+        #return good_options
     if len(ok_options) > 0:
-        return ok_options
+        maxadj2 = [{'score':0}]
+        for option in ok_options:
+            adj2 = calc_2deep_connected_open_squares(option, data, board)
+            if adj2 > maxadj2['score']:
+                maxadj = [{'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']}]
+            elif adj == maxadj2['score']:
+                maxadj.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
+        return maxadj
     return curr_options
 
 def g_kill_scenarios(curr_options, board):
@@ -213,6 +235,7 @@ def get_direction(board, data):
         print('ONE OPTION AVAILABLE')
         return curr_options[0]['direction']
     print('LOOKING FOR GUARENTEED KILL MOVES')
+    #still need to complmete the designation of very desirable board spots
     g_kill_options = g_kill_scenarios(curr_options, board)
     if len(g_kill_options) > 0:
         return g_kill_options[0]['direction']
@@ -220,6 +243,7 @@ def get_direction(board, data):
     #detect if snake needs to make certain moves to become untrapped
     # also consider yourself trapped if there is only a 1-wide escape from current situation
     # consider a place to be entrapped if, with your current length, you can't escape( easy hack would be space a couple bigger than your snake's size)
+    # if there is one exit of size 2, and another snake is one away from the exit, then move to escape
     print('LOOKING FOR CLOSE SNAKES TO RUN AWAY FROM ')
     #if you are the closest snake to a given food, and it is close by, move towards it
     print('REMOVING DEAD PATHS')
@@ -243,7 +267,8 @@ def get_direction(board, data):
         if not direction == 'False':
             return direction
 
-    # move away from the snake head closest from you
+    # !!! move away from the snake head closest from you
+    # especially if within 3 blocks
 
     # when 2 snakes are left, be extra aggresive
     return curr_options[0]['direction']

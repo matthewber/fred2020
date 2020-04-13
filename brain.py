@@ -207,10 +207,15 @@ def remove_dead_paths(curr_options, data, board):
         maxadj2 = [{'score':0}]
         for option in ok_options:
             adj2 = calc_2deep_connected_open_squares(option, data, board)
+            print(adj2)
             if adj2 > maxadj2[0]['score']:
                 maxadj = [{'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']}]
             elif adj == maxadj2[0]['score']:
                 maxadj.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
+            print('NEW ADJ2')
+            print(maxadj2)
+        print(MAXADJ2)
+        print(maxadj)
         return maxadj
     return curr_options
 

@@ -174,7 +174,7 @@ def is_big_snake_head(piece, data):
     for snake in data['board']['snakes']:
         if (not 'fred2020' in snake['name']) and (is_snake_bigger_than_me(snake)):
             head = snake['body'][0]
-            if piece['x'] == head['x'] and piece3['y'] == head['y']:
+            if piece['x'] == head['x'] and piece['y'] == head['y']:
                 return True
     return False
 

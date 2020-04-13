@@ -168,6 +168,8 @@ def calc_2deep_connected_open_squares(option, data, board):
             for piece2 in adj2_pieces:
                 if is_valid_move(piece2, data, board):
                     adj = adj + 3
+    print("ADJ2 SCORE: based on 2-3 scoring")
+    print(adj)
     return adj
 
 # look at the next move and treat possible move locations of other snakes as filled. Make sure there are two possible moves from this next location

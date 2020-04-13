@@ -163,12 +163,18 @@ def calc_2deep_connected_open_squares(option, data, board):
     adj_pieces = get_adjacent_pieces(option, board)
     for piece in adj_pieces:
         if is_valid_move(piece, data, board):
-            adj = adj + 2 #THESE VALUES FOR ADJ INCREMENTING AT DIFFERENT LEVELS CAN BE TUNED
+            adj = adj + 1 #THESE VALUES FOR ADJ INCREMENTING AT DIFFERENT LEVELS CAN BE TUNED
             adj2_pieces = get_adjacent_pieces(piece, board)
             for piece2 in adj2_pieces:
-                if is_valid_move(piece2, data, board):
-                    adj = adj + 3
-    print("ADJ2 SCORE: based on 2-3 scoring for OPTION")
+                if not (option['x'] == piece2['x'] and option['y'] == piece2['y']):
+                    if is_valid_move(piece2, data, board):
+                        adj = adj + 1
+                        adj3_pieces = get_adjacent_pieces(piece2, board)
+                        for piece3 in adj3_pieces:
+                            if not (piece3['x'] == piece['x'] and piece3['y'] == piece['y']):
+                                if is_valid_move(piece3, data, board):
+                                    adj = adj + 1
+    print("ADJ2 SCORE: based on 1-1-1 scoring for OPTION")
     print(option)
     print(adj)
     return adj

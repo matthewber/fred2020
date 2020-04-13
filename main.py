@@ -94,6 +94,12 @@ def snake_type(snake_name):
         return 'self'
     return 'snake'
 
+def did_snake_just_eat_food(snake_head):
+    for food in last_turn_food_locations:
+        if food['x'] == snake_head['x'] and food['y'] == snake_head['y']:
+            return True
+    return False
+
 def add_snake_to_board(snake, board):
     #add different marker for a disapeering tail if food hasn't been eaten
     #maybe: add marker to each piece of snake of how long until the tail, and of how far away snake's head is from another food item
@@ -104,6 +110,8 @@ def add_snake_to_board(snake, board):
             piece = snake['body'][i]
             element = board[piece['x']][piece['y']]
             element['type'] = snake_type(snake['name'])
+            if (i == len(size)-1) and not did_snake_just_eat_food(snake['body'][0]):
+                element['type'] = 'empty'
             board[piece['x']][piece['y']] = element
         except Exception as e:
             print(e)
@@ -181,7 +189,9 @@ def move():
     direction = get_direction(board, data)
     print('MOVING')
     print(direction)
-    return move_response(direction)
+    response = move_response(direction)
+    print(repsonse)
+    return response#move_response(direction)
 
 
 

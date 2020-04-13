@@ -218,6 +218,8 @@ def get_direction(board, data):
         return g_kill_options[0]['direction']
     print('DETECTING IF SNAKE IS TRAPPED')
     #detect if snake needs to make certain moves to become untrapped
+    # also consider yourself trapped if there is only a 1-wide escape from current situation
+    # consider a place to be entrapped if, with your current length, you can't escape( easy hack would be space a couple bigger than your snake's size)
     print('LOOKING FOR CLOSE SNAKES TO RUN AWAY FROM ')
     #if you are the closest snake to a given food, and it is close by, move towards it
     print('REMOVING DEAD PATHS')
@@ -241,4 +243,7 @@ def get_direction(board, data):
         if not direction == 'False':
             return direction
 
+    # move away from the snake head closest from you
+
+    # when 2 snakes are left, be extra aggresive
     return curr_options[0]['direction']

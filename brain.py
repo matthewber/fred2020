@@ -211,9 +211,9 @@ def remove_dead_paths(curr_options, data, board):
             print('OLD = '+str(maxadj2[0]['score']))
             if int(adj2) > int(maxadj2[0]['score']):
                 print('TRUE')
-                maxadj = [{'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']}]
+                maxadj2 = [{'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']}]
             elif adj == maxadj2[0]['score']:
-                maxadj.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
+                maxadj2.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
             else:
                 print('FALSE, OLD IS BIGGER THAN NEW ')
             print('NEW ADJ2')

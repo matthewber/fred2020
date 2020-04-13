@@ -209,11 +209,11 @@ def remove_dead_paths(curr_options, data, board):
             adj2 = calc_2deep_connected_open_squares(option, data, board)
             print('NEW = '+str(adj2))
             print('OLD = '+str(maxadj2[0]['score']))
-            if int(adj2) > int(maxadj2[0]['score']):
+            if adj == maxadj2[0]['score'] or adj > 20:
+                maxadj2.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
+            elif int(adj2) > int(maxadj2[0]['score']):
                 print('TRUE')
                 maxadj2 = [{'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']}]
-            elif adj == maxadj2[0]['score']:
-                maxadj2.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
             else:
                 print('FALSE, OLD IS BIGGER THAN NEW ')
             print('NEW ADJ2')

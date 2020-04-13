@@ -168,7 +168,8 @@ def calc_2deep_connected_open_squares(option, data, board):
             for piece2 in adj2_pieces:
                 if is_valid_move(piece2, data, board):
                     adj = adj + 3
-    print("ADJ2 SCORE: based on 2-3 scoring")
+    print("ADJ2 SCORE: based on 2-3 scoring for OPTION")
+    print(option)
     print(adj)
     return adj
 
@@ -197,7 +198,7 @@ def remove_dead_paths(curr_options, data, board):
     #if len(great_options) > 0:
     #    return great_options
     if len(good_options) > 0:
-        if data['turn'] < 75:#Tunable PARAMETER for testing or AI implementation
+        if data['turn'] < 75 or data['you']['health'] < 20:#Tunable PARAMETERS for testing or AI implementation
             return good_options
         #return good_options
     if len(ok_options) == 1:
@@ -251,7 +252,7 @@ def get_direction(board, data):
     # if there is one exit of size 2, and another snake is one away from the exit, then move to escape
     print('LOOKING FOR CLOSE SNAKES TO RUN AWAY FROM ')
     #if you are the closest snake to a given food, and it is close by, move towards it
-    if data['you']['health'] < 15:
+    if data['you']['health'] < 5:
         direction = go_to_closest_food(curr_options, data)
         if not direction == 'False':
             return direction

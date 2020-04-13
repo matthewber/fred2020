@@ -197,13 +197,15 @@ def remove_dead_paths(curr_options, data, board):
         if data['turn'] < 75:#Tunable PARAMETER for testing or AI implementation
             return good_options
         #return good_options
+    if len(ok_options) == 1:
+        return ok_options
     if len(ok_options) > 0:
         maxadj2 = [{'score':0}]
         for option in ok_options:
             adj2 = calc_2deep_connected_open_squares(option, data, board)
-            if adj2 > maxadj2['score']:
+            if adj2 > maxadj2[0]['score']:
                 maxadj = [{'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']}]
-            elif adj == maxadj2['score']:
+            elif adj == maxadj2[0]['score']:
                 maxadj.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
         return maxadj
     return curr_options

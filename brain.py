@@ -219,7 +219,7 @@ def remove_dead_paths(curr_options, data, board):
             print('NEW ADJ2')
             print(maxadj2)
         print(maxadj2)
-        return maxadj
+        return maxadj2
     return curr_options
 
 def g_kill_scenarios(curr_options, board):

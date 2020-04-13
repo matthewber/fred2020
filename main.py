@@ -110,7 +110,7 @@ def add_snake_to_board(snake, board):
             piece = snake['body'][i]
             element = board[piece['x']][piece['y']]
             element['type'] = snake_type(snake['name'])
-            if (i == size-1) and not did_snake_just_eat_food(snake['body'][0]):
+            if (size > 3) and (i == size-1) and not did_snake_just_eat_food(snake['body'][0]):
                 element['type'] = 'empty'
             board[piece['x']][piece['y']] = element
         except Exception as e:

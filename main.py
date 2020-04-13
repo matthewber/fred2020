@@ -190,7 +190,7 @@ def move():
     print('MOVING')
     print(direction)
     response = move_response(direction)
-    print(repsonse)
+    print(response)
     return response#move_response(direction)
 
 

@@ -124,7 +124,7 @@ def closest_to_food(food, data):
 
 def go_to_closest_food(curr_options, data):
     #(return false) if you are farther than 1 move away, dont choose a food without more than 2 open spaces next to it.
-    #
+    # Attempt to move in the direction of path to the food, rather than directly to the food
     closest_food = get_closest_food(data)
     if not closest_to_food(closest_food, data):#
         return 'False'
@@ -214,8 +214,7 @@ def remove_dead_paths(curr_options, data, board):
                 maxadj.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
             print('NEW ADJ2')
             print(maxadj2)
-        print(MAXADJ2)
-        print(maxadj)
+        print(maxadj2)
         return maxadj
     return curr_options
 

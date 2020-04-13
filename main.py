@@ -110,7 +110,7 @@ def add_snake_to_board(snake, board):
             piece = snake['body'][i]
             element = board[piece['x']][piece['y']]
             element['type'] = snake_type(snake['name'])
-            if (i == len(size)-1) and not did_snake_just_eat_food(snake['body'][0]):
+            if (i == size-1) and not did_snake_just_eat_food(snake['body'][0]):
                 element['type'] = 'empty'
             board[piece['x']][piece['y']] = element
         except Exception as e:
@@ -157,7 +157,7 @@ def is_snake_bigger_than_me(snake):
 def add_snakes_to_board(data, board):
     for snake in data['board']['snakes']:
         board = add_snake_to_board(snake, board)
-        if not snake['name'] == 'fred2020':# and other snake is bigger than me
+        if not snake['name'] == 'fred2020':
             board = add_danger_zone_near_head(snake, board)
     return board
 

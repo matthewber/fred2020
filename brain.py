@@ -158,7 +158,7 @@ def calc_connected_open_squares(option, data, board):
     return adj
 
 def is_big_snake_head(piece, data):
-    for snake in data['snakes']:
+    for snake in data['board']['snakes']:
         if (not 'fred2020' in snake['name']) and (is_snake_bigger_than_me(snake)):
             head = snake['body'][0]
             if piece['x'] == head['x'] and piece3['y'] == head['y']:

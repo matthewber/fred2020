@@ -1,7 +1,6 @@
 
 #returns the number of turns it would take to reach this food item
-def distance_from_food(food, data):
-    head = get_self_head(data)
+def distance_from_food(food, head):
     distx = abs(head['x'] - food['x'])
     disty = abs(head['y'] - food['y'])
     return distx + disty
@@ -99,7 +98,8 @@ def get_current_options(board, data):
 def get_closest_food(data):
     closest_food = {'d':999999999}
     for food in data['board']['food']:
-        dist = distance_from_food(food, data)
+        head = get_self_head(data)
+        dist = distance_from_food(food, head)
         food_item = {'d':dist,'x':food['x'],'y':food['y']}
         if food_item['d'] < closest_food['d']:
             closest_food = food_item
@@ -111,9 +111,22 @@ def is_move_in_options(move, options):
             return True
     return False
 
+def closest_to_food(food, data):
+    head = get_self_head(data)
+    length_to_food = distance_from_food(food, head)
+    for snake in data['board']['snakes']:
+        if not (snake['name'] == 'fred2020') and :
+            snake_head = snake['body'][0]
+            snake_length_to_food = distance_from_food(food, snake_head)
+            if snake_length_to_food < length_to_food:
+                return False
+    return True
+
 def go_to_closest_food(curr_options, data):
     #dont choose that food item if it is closer to another snakes' head (unless that snake is 3 or more smaller than you)
     closest_food = get_closest_food(data)
+    if not closest_to_food(closest_food, data):
+        return 'False'
     head = get_self_head(data)
     if head['x'] > closest_food['x'] and is_move_in_options('left',curr_options):
         return 'left'
@@ -143,6 +156,7 @@ def calc_connected_open_squares(option, data, board):
             adj = adj + 1
     return adj
 
+# look at the next move and treat possible move locations of other snakes as filled. Make sure there are two possible moves from this next location
 def remove_dead_paths(curr_options, data, board):
     ok_options = []
     good_options = []
@@ -172,8 +186,17 @@ def remove_dead_paths(curr_options, data, board):
         return ok_options
     return curr_options
 
+def g_kill_scenarios(curr_options, board):
+    g_kill_scenarios = []
+    for option in curr_options:
+        if board[option['x']][option['y']]['type'] == 'VERY DESIRABLE':
+            print('HERE I GO KILLING AGAIN')
+            g_kill_scenarios.append(option)
+    return g_kill_scenarios
+
 def kill_scenarios(curr_options, board):
-    #if you find food next to a wall and are in correct possition, trap other snake
+    #if you find food next to a wall and are in correct position, trap other snake
+    #ie look for all types of kill scenario moves
     kill_scenarios = []
     for option in curr_options:
         if board[option['x']][option['y']]['type'] in ['DESIRABLE', 'VERY DESIRABLE']:
@@ -189,6 +212,10 @@ def get_direction(board, data):
     if len(curr_options) == 1:
         print('ONE OPTION AVAILABLE')
         return curr_options[0]['direction']
+    print('LOOKING FOR GUARENTEED KILL MOVES')
+    g_kill_options = g_kill_scenarios(curr_options, board)
+    if len(g_kill_options) > 0:
+        return g_kill_options[0]['direction']
     print('DETECTING IF SNAKE IS TRAPPED')
     #detect if snake needs to make certain moves to become untrapped
     print('LOOKING FOR CLOSE SNAKES TO RUN AWAY FROM ')
@@ -202,7 +229,7 @@ def get_direction(board, data):
     if len(kill_options) > 0:
         return kill_options[0]['direction']
 
-    # look at the next move and treat possible move locations of other snakes as filled. Make sure there are two possible moves from this next location
+
     # when counting the number of adjacent empty spaces, and determining if an out, take into consideration where the next snake heads' move will be
     #don't go into spot with few adjacent open pieces, unless out will appear soon
     #dont enter a narrow hall with other snake heads nearby
@@ -211,8 +238,7 @@ def get_direction(board, data):
     #choose from remaining options - add choosing to kill over food in certain scenarios
     if data['you']['health'] < 101:
         direction = go_to_closest_food(curr_options, data)
-        return direction
-    # next things to add:
-    #    don't go down dead routes
-    #    kill snakes when you have them in a vulnerable position
+        if not direction == 'False':
+            return direction
+
     return curr_options[0]['direction']

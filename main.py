@@ -246,7 +246,7 @@ def remove_dead_paths(curr_options, data, board):
             if adj == maxadj2[0]['score']:
                 maxadj2.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
             elif int(adj2) > int(maxadj2[0]['score']):
-                if adj > 8:
+                if int(adj) > 5 and int(maxadj2[0]['score']) > 5:
                     maxadj2.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
                 else:
                     maxadj2 = [{'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']}]

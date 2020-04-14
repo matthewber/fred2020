@@ -207,9 +207,6 @@ def calc_2deep_connected_open_squares(option, data, board):
     print(adj)
     return adj
 
-def does_food_exist(location):
-    for food in last_turn_food_locations:
-
 
 # look at the next move and treat possible move locations of other snakes as filled. Make sure there are two possible moves from this next location
 def remove_dead_paths(curr_options, data, board):

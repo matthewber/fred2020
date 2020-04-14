@@ -369,6 +369,7 @@ def snake_exists(name):
 
 def update_food_locations(data):
     global last_turn_food_locations
+    global saved_old_food
     saved_old_food = last_turn_food_locations
     last_turn_food_locations = []
     for food in data['board']['food']:
@@ -412,7 +413,8 @@ def snake_type(snake_name):
     return 'snake'
 
 def did_snake_just_eat_food(snake_head):
-    global saved_old_food
+    print('TESTING IF SNAKE ATE FOOD')
+    _old_food
     print(saved_old_food)
     for food in saved_old_food:
         if food['x'] == snake_head['x'] and food['y'] == snake_head['y']:

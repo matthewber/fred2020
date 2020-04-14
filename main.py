@@ -207,6 +207,10 @@ def calc_2deep_connected_open_squares(option, data, board):
     print(adj)
     return adj
 
+def does_food_exist(location):
+    for food in last_turn_food_locations:
+
+
 # look at the next move and treat possible move locations of other snakes as filled. Make sure there are two possible moves from this next location
 def remove_dead_paths(curr_options, data, board):
     ok_options = []
@@ -243,13 +247,12 @@ def remove_dead_paths(curr_options, data, board):
             adj2 = calc_2deep_connected_open_squares(option, data, board)
             print('NEW = '+str(adj2))
             print('OLD = '+str(maxadj2[0]['score']))
-            if adj == maxadj2[0]['score']:
+            if int(adj2) > 4 and int(maxadj2[0]['score']) > 4:
+                maxadj2.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
+            elif adj2 == maxadj2[0]['score']:
                 maxadj2.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
             elif int(adj2) > int(maxadj2[0]['score']):
-                if int(adj) > 5 and int(maxadj2[0]['score']) > 5:
-                    maxadj2.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
-                else:
-                    maxadj2 = [{'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']}]
+                maxadj2 = [{'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']}]
             else:
                 print('FALSE, OLD IS BIGGER THAN NEW ')
             print('NEW ADJ2')
@@ -429,7 +432,7 @@ def add_snake_to_board(snake, board):
             piece = snake['body'][i]
             element = board[piece['x']][piece['y']]
             element['type'] = snake_type(snake['name'])
-            if (size > 3) and (i == size-1) and not did_snake_just_eat_food(snake['body'][0]):
+            if (i > 3) and (i == size-1) and not did_snake_just_eat_food(snake['body'][0]):
                 print('TAIL DISAPEERING FOR '+snake['name'])
                 element['type'] = 'empty'
             board[piece['x']][piece['y']] = element

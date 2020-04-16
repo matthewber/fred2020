@@ -12,7 +12,7 @@ saved_old_food = []
 
 # OLD brain
 
-#returns the number of turns it would take to reach this food item
+#returns the number of turns it would take to reach this food item, if direct line available
 def distance_from_food(food, head):
     distx = abs(head['x'] - food['x'])
     disty = abs(head['y'] - food['y'])
@@ -42,12 +42,13 @@ def get_move(direction, head):
     return {'direction':direction, 'x':x, 'y':y}
 
 
-def get_move_options(board, data):
+def get_move_options(board, data, head=None):
     move_options = []
-    self_head = get_self_head(data)
+    if head == None:
+        head = get_self_head(data)
     directions = ['up', 'down', 'left', 'right']
     for direction in directions:
-        move = get_move(direction, self_head)
+        move = get_move(direction, head)
         move_options.append(move)
     return move_options
 
@@ -241,6 +242,7 @@ def remove_dead_paths(curr_options, data, board):
     if len(ok_options) > 0:
         maxadj2 = [{'score':0}]
         for option in ok_options:
+            #Assigns a score to the move option
             adj2 = calc_2deep_connected_open_squares(option, data, board)
             print('NEW = '+str(adj2))
             print('OLD = '+str(maxadj2[0]['score']))
@@ -294,6 +296,7 @@ def get_direction(board, data):
     # also consider yourself trapped if there is only a 1-wide escape from current situation
     # consider a place to be entrapped if, with your current length, you can't escape( easy hack would be space a couple bigger than your snake's size)
     # if there is one exit of size 2, and another snake is one away from the exit, then move to escape
+    # !!!!!!! dont move into a place where you could have a 2 spot standoff chice with a bigger snake (ie adjacent to Danger slots)
     print('LOOKING FOR CLOSE SNAKES TO RUN AWAY FROM ')
     #if you are the closest snake to a given food, and it is close by, move towards it
     if data['you']['health'] < 5:
@@ -320,6 +323,7 @@ def get_direction(board, data):
             return direction
 
     # !!! move away from the snake head closest from you
+    # move away if there are two snakes close together to you
     # especially if within 3 blocks
 
     # when 2 snakes are left, be extra aggresive
@@ -440,15 +444,23 @@ def add_snake_to_board(snake, board):
             print('SNAKE SIZE ERROR')
     return board
 
-def snake_has_1_option(snake, board):
+def snake_has_1_option(snake, board, data):
+    snake_head = snake['body'][0]
+    num_options = 0
+    options = get_move_options(board, data, head=snake_head)
+    for option in options:
+        if is_valid_move(option, data, board):
+            num_options = num_options + 1
+    if num_options < 2:
+        return True
     return False
 
-def add_danger_zone_near_head(snake, board):
+def add_danger_zone_near_head(snake, board, data):
     # set up desired spots next to the heads of small snakes. If much higher in size, and good amount of food, move in to kill (get to this spot)
     # if an other snake has only one option for moving, mark as a very desirable location (only if that snake is smaller)
     if is_snake_bigger_than_me(snake):
         type = 'DANGER'
-    elif snake_has_1_option(snake, board):
+    elif snake_has_1_option(snake, board, data):
         type = "VERY DESIRABLE"
     else:
         type = "DESIRABLE"
@@ -480,7 +492,7 @@ def add_snakes_to_board(data, board):
     for snake in data['board']['snakes']:
         board = add_snake_to_board(snake, board)
         if not snake['name'] == 'fred2020':
-            board = add_danger_zone_near_head(snake, board)
+            board = add_danger_zone_near_head(snake, board, data)
     return board
 
 def add_adjacent_open_squares(data, board):

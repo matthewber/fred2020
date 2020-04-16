@@ -418,7 +418,7 @@ def snake_type(snake_name):
 
 def did_snake_just_eat_food(snake_head):
     print('TESTING IF SNAKE ATE FOOD')
-    _old_food
+    global saved_old_food
     print(saved_old_food)
     for food in saved_old_food:
         if food['x'] == snake_head['x'] and food['y'] == snake_head['y']:
@@ -433,7 +433,10 @@ def add_snake_to_board(snake, board):
     for i in range(size):
         try:
             piece = snake['body'][i]
+            n_until_empty = size-i-1
+            print('SNAKE N UNTIL EMPTY')
             element = board[piece['x']][piece['y']]
+            element['n_until_empty'] = n_until_empty
             element['type'] = snake_type(snake['name'])
             if (i > 3) and (i == size-1) and not did_snake_just_eat_food(snake['body'][0]):
                 print('TAIL DISAPEERING FOR '+snake['name'])
@@ -495,7 +498,7 @@ def add_snakes_to_board(data, board):
             board = add_danger_zone_near_head(snake, board, data)
     return board
 
-def add_adjacent_open_squares(data, board):
+def add_trapped_zones(data, board):
     self_head = get_self_head(data)
     options = get_move_options(board, data)
     for option in options:
@@ -505,7 +508,7 @@ def add_adjacent_open_squares(data, board):
 def make_board(data):
     board = initialize_board(data)
     board = add_snakes_to_board(data, board)
-    board = add_adjacent_open_squares(data, board)
+    board = add_trapped_zones(data, board)
     # add counts of how many adjacent open squares there are to the move options
     return board
 

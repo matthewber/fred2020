@@ -268,13 +268,18 @@ def remove_dead_paths(curr_options, data, board):
             adj2 = calc_2deep_connected_open_squares(option, data, board)
             print('NEW = '+str(adj2))
             print('OLD = '+str(maxadj2[0]['score']))
-            threshold = 999999#snake_sizes['fred2020']
-            if int(adj2) > threshold and int(maxadj2[0]['score']) > threshold:
-                maxadj2.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
-            elif adj2 == maxadj2[0]['score']:
+            threshold = 0.77#snake_sizes['fred2020']
+            adj2 = int(adj2)
+            max_adj2_score = int(maxadj2[0]['score'])
+            if adj2 == maxadj2[0]['score']:
                 maxadj2.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
             elif int(adj2) > int(maxadj2[0]['score']):
-                maxadj2 = [{'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']}]
+                if (adj2 * threshold) < max_adj2_score:
+                    maxadj2.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
+                else:
+                    maxadj2 = [{'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']}]
+            elif (max_adj2_score * threshold) < adj2:
+                maxadj2.append({'score':adj2, 'direction':option['direction'], 'x':option['x'], 'y':option['y']})
             else:
                 print('FALSE, OLD IS BIGGER THAN NEW ')
             print('NEW ADJ2')

@@ -290,6 +290,7 @@ def get_direction(board, data):
     #still need to complmete the designation of very desirable board spots
     g_kill_options = g_kill_scenarios(curr_options, board)
     if len(g_kill_options) > 0:
+        print('ATTEMPTING GUARENTEED KILL MOVE')
         return g_kill_options[0]['direction']
     print('DETECTING IF SNAKE IS TRAPPED')
     #detect if snake needs to make certain moves to become untrapped
@@ -435,6 +436,7 @@ def add_snake_to_board(snake, board):
             piece = snake['body'][i]
             n_until_empty = size-i-1
             print('SNAKE N UNTIL EMPTY')
+            print(n_until_empty)
             element = board[piece['x']][piece['y']]
             element['n_until_empty'] = n_until_empty
             element['type'] = snake_type(snake['name'])

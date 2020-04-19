@@ -274,7 +274,7 @@ def remove_dead_paths(curr_options, data, board):
             adj2 = calc_2deep_connected_open_squares(option, data, board)
             print('NEW = '+str(adj2))
             print('OLD = '+str(maxadj2[0]['score']))
-            threshold = 0.77#snake_sizes['fred2020']
+            threshold = 0.7#snake_sizes['fred2020']
             adj2 = int(adj2)
             max_adj2_score = int(maxadj2[0]['score'])
             if adj2 == maxadj2[0]['score']:

@@ -203,20 +203,26 @@ def calc_2deep_connected_open_squares(option, data, board):
                         print('DEC 3')
                     if is_valid_move(piece2, data, board) or will_space_be_empty(board, piece2, 2):
                         adj = adj + 2
+                        print('ADJ3')
+                        print(piece2)
                         adj3_pieces = get_adjacent_pieces(piece2, board)
                         for piece3 in adj3_pieces:
                             if not (piece3['x'] == piece['x'] and piece3['y'] == piece['y']):
                                 if is_valid_move(piece3, data, board) or will_space_be_empty(board, piece3, 3):
                                     adj = adj + 3
                                     adj4_pieces = get_adjacent_pieces(piece3, board)
+                                    print('ADJ4')
+                                    print(piece3)
                                     for piece4 in adj4_pieces:
                                           if not (piece4['x'] == piece2['x'] and piece4['y'] == piece2['y']):
                                               if is_valid_move(piece4, data, board) or will_space_be_empty(board, piece4, 4):
+                                                  print(piece4)
                                                   adj = adj + 4
                                                   adj5_pieces = get_adjacent_pieces(piece4, board)
                                                   for piece5 in adj5_pieces:
                                                       if not (piece5['x'] == piece3['x'] and piece5['y'] == piece3['y']):
                                                           if is_valid_move(piece5, data, board) or will_space_be_empty(board, piece5, 5):
+                                                              print(piece5)
                                                               adj = adj + 5
                                                           if is_big_snake_head(piece5, data):
                                                               adj = adj - 3

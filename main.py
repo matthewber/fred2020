@@ -476,8 +476,6 @@ def add_snake_to_board(snake, board):
         try:
             piece = snake['body'][i]
             n_until_empty = size-i-1
-            print('SNAKE N UNTIL EMPTY')
-            print(n_until_empty)
             element = board[piece['x']][piece['y']]
             if i == 0:
                 element['snake_head'] = True

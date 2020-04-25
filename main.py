@@ -199,7 +199,7 @@ def calc_2deep_connected_open_squares(option, data, board):
             for piece2 in adj2_pieces:
                 if not (option['x'] == piece2['x'] and option['y'] == piece2['y']):
                     if is_big_snake_head(piece2, data):
-                        adj = adj - 4
+                        adj = adj - 7
                         print('DEC 3')
                     if is_valid_move(piece2, data, board) or will_space_be_empty(board, piece2, 2):
                         adj = adj + 4
@@ -227,10 +227,10 @@ def calc_2deep_connected_open_squares(option, data, board):
                                                           if is_big_snake_head(piece5, data):
                                                               adj = adj - 3
                                               if is_big_snake_head(piece4, data):
-                                                  adj = adj - 3
+                                                  adj = adj - 6
                                 if is_big_snake_head(piece3, data):
                                     print('DEC 3')
-                                    adj = adj - 4
+                                    adj = adj - 8
     print("ADJ2 SCORE: based on 1-1-1 scoring for OPTION")
     print(option)
     print(adj)

@@ -232,7 +232,7 @@ def calc_2deep_connected_open_squares(option, data, board):
                                                              # print(piece5)
                                                             #  adj = adj + 4
                                                           #if is_big_snake_head(piece5, data):
-                                                              adj = adj - 3
+                                                              #adj = adj - 3
                                               if is_big_snake_head(piece4, data):
                                                   adj = adj - 6
                                 if is_big_snake_head(piece3, data):

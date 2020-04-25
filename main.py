@@ -65,7 +65,12 @@ def y_in_bounds(y, data):
     return True
 
 def is_in_bounds(option, data):
-    return (x_in_bounds(option['x'], data) and y_in_bounds(option['y'], data))
+    print(option)
+    if (x_in_bounds(option['x'], data) and y_in_bounds(option['y'], data)):
+        print('IN BOUNDS')
+        return True
+    print('NOT IN BOUNDS')
+    return False
 
 def is_space_empty(option, board):
     boardPiece = board[option['x']][option['y']]
@@ -262,7 +267,7 @@ def remove_dead_paths(curr_options, data, board):
     #if len(great_options) > 0:
     #    return great_options
     if len(good_options) > 0:
-        if data['turn'] < 10 or data['you']['health'] < 20:#Tunable PARAMETERS for testing or AI implementation
+        if data['turn'] < 6 or data['you']['health'] < 30:#Tunable PARAMETERS for testing or AI implementation
             return good_options
         #return good_options
     if len(ok_options) == 1:

@@ -194,7 +194,7 @@ def calc_2deep_connected_open_squares(option, data, board):
     adj_pieces = get_adjacent_pieces(option, board)
     for piece in adj_pieces:
         if is_valid_move(piece, data, board):
-            adj = adj + 1 #THESE VALUES FOR ADJ INCREMENTING AT DIFFERENT LEVELS CAN BE TUNED
+            adj = adj + 5 #THESE VALUES FOR ADJ INCREMENTING AT DIFFERENT LEVELS CAN BE TUNED
             adj2_pieces = get_adjacent_pieces(piece, board)
             for piece2 in adj2_pieces:
                 if not (option['x'] == piece2['x'] and option['y'] == piece2['y']):
@@ -202,7 +202,7 @@ def calc_2deep_connected_open_squares(option, data, board):
                         adj = adj - 4
                         print('DEC 3')
                     if is_valid_move(piece2, data, board) or will_space_be_empty(board, piece2, 2):
-                        adj = adj + 2
+                        adj = adj + 4
                         print('ADJ3')
                         print(piece2)
                         adj3_pieces = get_adjacent_pieces(piece2, board)
@@ -217,13 +217,13 @@ def calc_2deep_connected_open_squares(option, data, board):
                                           if not (piece4['x'] == piece2['x'] and piece4['y'] == piece2['y']):
                                               if is_valid_move(piece4, data, board) or will_space_be_empty(board, piece4, 4):
                                                   print(piece4)
-                                                  adj = adj + 4
+                                                  adj = adj + 2
                                                   adj5_pieces = get_adjacent_pieces(piece4, board)
                                                   for piece5 in adj5_pieces:
                                                       if not (piece5['x'] == piece3['x'] and piece5['y'] == piece3['y']):
                                                           if is_valid_move(piece5, data, board) or will_space_be_empty(board, piece5, 5):
                                                               print(piece5)
-                                                              adj = adj + 5
+                                                              adj = adj + 2
                                                           if is_big_snake_head(piece5, data):
                                                               adj = adj - 3
                                               if is_big_snake_head(piece4, data):

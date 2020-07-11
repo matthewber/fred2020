@@ -325,18 +325,18 @@ def get_direction(board, data):
     curr_options = get_current_options(board, data)
     print('CURRENT OPTIONS')
     print(curr_options)
-    new_curr_options = []
+    #TEMP FOR SMALL BOARD ON OWN TRYING TO STAY SMALL
     if len(curr_options) > 1:
+        new_curr_options = []
         for option in curr_options:
             food = False
-            #TEMP FOR SMALL BOARD ON OWN TRYING TO STAY SMALL
-            if data['you']['health'] > 10:
                 for food in data['board']['food']:
                     if food['x'] == option['x'] and food['y'] == option['y']:
                         food = True
             if not food:
                 new_curr_options.append(option)
-    curr_options = new_curr_options            
+        if data['you']['health'] > 10:
+            curr_options = new_curr_options            
     #END TEMP
     
     if len(curr_options) == 1:

@@ -329,12 +329,14 @@ def get_direction(board, data):
     if len(curr_options) > 1:
         new_curr_options = []
         for option in curr_options:
-            food = False
+            print('OPTION')
+            print(option)
+            is_food = 'false'
             for food in data['board']['food']:
                 if (food['x'] == option['x']) and (food['y'] == option['y']):
                     print('Food block')
-                    food = True
-            if not food:
+                    food = 'true'
+            if is_food == 'false':
                 print('NO FOOD ON PTION;')
                 print(option)
                 new_curr_options.append(option)

@@ -325,7 +325,7 @@ def get_direction(board, data):
     curr_options = get_current_options(board, data)
     print('CURRENT OPTIONS')
     print(curr_options)
-    new_curr_options
+    new_curr_options = []
     if len(curr_options) > 1:
         for option in curr_options:
             food = False

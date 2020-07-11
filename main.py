@@ -338,7 +338,8 @@ def get_direction(board, data):
         if data['you']['health'] > 10:
             curr_options = new_curr_options            
     #END TEMP
-    
+    print('END TEMP>>')
+    print(curr_options)
     if len(curr_options) == 1:
         print('ONE OPTION AVAILABLE')
         return curr_options[0]['direction']

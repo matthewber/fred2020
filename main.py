@@ -325,6 +325,15 @@ def get_direction(board, data):
     curr_options = get_current_options(board, data)
     print('CURRENT OPTIONS')
     print(curr_options)
+    #TEMP FOR CHASING TAIL IF POSSIBLE
+    tail = data['you']['body'][snake_sizes['fred2020']-1]
+    change = 'False'
+    for option in curr_options:
+        if (option['x'] == tail['x']) and (option['y'] == tail['y']):
+            new_option = [option]
+            change = 'True'
+    if change == 'True' and data['you']['health'] > 8:
+        curr_options = new_option
     #TEMP FOR SMALL BOARD ON OWN TRYING TO STAY SMALL
     if len(curr_options) > 1:
         new_curr_options = []

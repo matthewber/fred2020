@@ -66,6 +66,12 @@ def y_in_bounds(y, data):
 
 def is_in_bounds(option, data):
     print(option)
+    #TEMP FOR SMALL BOARD ON OWN TRYING TO STAY SMALL
+    if data['you']['health'] > 10:
+        for food in data['board']['food']:
+            if food['x'] == option['x'] and food['y'] == option['y']:
+                return False
+    #END TEMP
     if (x_in_bounds(option['x'], data) and y_in_bounds(option['y'], data)):
         print('IN BOUNDS')
         return True
@@ -224,7 +230,7 @@ def calc_2deep_connected_open_squares(option, data, board):
                                           if not (piece4['x'] == piece2['x'] and piece4['y'] == piece2['y']):
                                               if is_valid_move(piece4, data, board) or will_space_be_empty(data, board, piece4, 4):
                                                   print(piece4)
-                                                  adj = adj + 3
+                                                  '''adj = adj + 3'''
                                                   #adj5_pieces = get_adjacent_pieces(piece4, board)
                                                   #for piece5 in adj5_pieces:
                                                       #if not (piece5['x'] == piece3['x'] and piece5['y'] == piece3['y']):
@@ -233,8 +239,8 @@ def calc_2deep_connected_open_squares(option, data, board):
                                                             #  adj = adj + 4
                                                           #if is_big_snake_head(piece5, data):
                                                               #adj = adj - 3
-                                              if is_big_snake_head(piece4, data):
-                                                  adj = adj - 6
+                                              '''if is_big_snake_head(piece4, data):
+                                                  adj = adj - 6'''
                                 if is_big_snake_head(piece3, data):
                                     print('DEC 3')
                                     adj = adj - 8
@@ -359,7 +365,7 @@ def get_direction(board, data):
     #prioritize staying away from big snake heads!
     # and not getting stuck against a wall and moving towards open areas
     #choose from remaining options - add choosing to kill over food in certain scenarios
-    if data['you']['health'] < 101:
+    if data['you']['health'] < 10:#100:
         direction = go_to_closest_food(curr_options, data)
         if not direction == 'False':
             return direction

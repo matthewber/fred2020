@@ -64,14 +64,9 @@ def y_in_bounds(y, data):
         return False
     return True
 
+
 def is_in_bounds(option, data):
     print(option)
-    #TEMP FOR SMALL BOARD ON OWN TRYING TO STAY SMALL
-    if data['you']['health'] > 10:
-        for food in data['board']['food']:
-            if food['x'] == option['x'] and food['y'] == option['y']:
-                return False
-    #END TEMP
     if (x_in_bounds(option['x'], data) and y_in_bounds(option['y'], data)):
         print('IN BOUNDS')
         return True
@@ -330,9 +325,25 @@ def get_direction(board, data):
     curr_options = get_current_options(board, data)
     print('CURRENT OPTIONS')
     print(curr_options)
+    new_curr_options
+    if len(curr_options) > 1:
+        for option in curr_options:
+            food = False
+            #TEMP FOR SMALL BOARD ON OWN TRYING TO STAY SMALL
+            if data['you']['health'] > 10:
+                for food in data['board']['food']:
+                    if food['x'] == option['x'] and food['y'] == option['y']:
+                        food = True
+            if not food:
+                new_curr_options.append(option)
+    curr_options = new_curr_options            
+    #END TEMP
+    
     if len(curr_options) == 1:
         print('ONE OPTION AVAILABLE')
         return curr_options[0]['direction']
+    #TEMP FOR SMALL BOARD ON OWN TRYING TO STAY SMALL
+    
     print('LOOKING FOR GUARENTEED KILL MOVES')
     #still need to complmete the designation of very desirable board spots
     g_kill_options = g_kill_scenarios(curr_options, board)

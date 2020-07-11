@@ -335,7 +335,11 @@ def get_direction(board, data):
                     print('Food block')
                     food = True
             if not food:
+                print('NO FOOD ON PTION;')
+                print(option)
                 new_curr_options.append(option)
+        print('NEW CURR OPTINOS')
+        print(new_curr_options)
         if data['you']['health'] > 10:
             curr_options = new_curr_options            
     #END TEMP

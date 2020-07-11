@@ -330,9 +330,9 @@ def get_direction(board, data):
         new_curr_options = []
         for option in curr_options:
             food = False
-                for food in data['board']['food']:
-                    if food['x'] == option['x'] and food['y'] == option['y']:
-                        food = True
+            for food in data['board']['food']:
+                if food['x'] == option['x'] and food['y'] == option['y']:
+                    food = True
             if not food:
                 new_curr_options.append(option)
         if data['you']['health'] > 10:

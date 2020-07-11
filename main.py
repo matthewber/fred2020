@@ -332,7 +332,7 @@ def get_direction(board, data):
         if (option['x'] == tail['x']) and (option['y'] == tail['y']):
             new_option = [option]
             change = 'True'
-    if change == 'True' and data['you']['health'] > 21:
+    if change == 'True' and data['you']['health'] > 30:
         curr_options = new_option
     #TEMP FOR SMALL BOARD ON OWN TRYING TO STAY SMALL
     if len(curr_options) > 1:
